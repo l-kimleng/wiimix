@@ -4,5 +4,6 @@ namespace WiiMix.Wpf.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
+
     }
 }
