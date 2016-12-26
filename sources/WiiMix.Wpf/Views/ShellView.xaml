@@ -17,6 +17,7 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
     <Grid>
-        <local:ApplicationBrandName />
+        <local:ApplicationBrandName VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"/>
     </Grid>
 </controls:MetroWindow>

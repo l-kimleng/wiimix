@@ -6,21 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" Width="278.667" Height="125.333">
     <UserControl.Resources>
-        <Storyboard x:Key="LoadingStoryboard">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="UserControl">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.25"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.75"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+        
     </UserControl.Resources>
-    <UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource LoadingStoryboard}"/>
-        </EventTrigger>
-    </UserControl.Triggers>
     <Grid HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
         <Viewbox>
