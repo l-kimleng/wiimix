@@ -6,18 +6,21 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:WiiMix.Wpf"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:utils="clr-namespace:WiiMix.SaleInventory.Utils;assembly=WiiMix.SaleInventory"
         x:Class="WiiMix.Wpf.Views.ShellView"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Height="350" 
+        Height="350"
         Width="525"
         BorderBrush="{DynamicResource AccentColorBrush4}"
         BorderThickness="1"
         Background="{DynamicResource AccentBaseColorBrush}"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
+        Title="Sale and Inventory">
     <Grid>
-        <local:ApplicationBrandName VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"/>
+        <!--<local:ApplicationBrandName VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"/>-->
+        <ContentControl prism:RegionManager.RegionName="{x:Static utils:RegionNameCollection.CoreRegion}"
+                        Margin="20"/>
     </Grid>
 </controls:MetroWindow>
