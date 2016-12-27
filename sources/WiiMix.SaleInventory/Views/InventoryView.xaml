@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <TextBlock Text="Hello world"/>    
+        <TextBlock HorizontalAlignment="Left" Text="Inventory View"/>
+        
     </Grid>
 </UserControl>

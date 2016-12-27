@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
 using WiiMix.SaleInventory.Utils;
@@ -20,12 +21,17 @@ namespace WiiMix.SaleInventory
 
         public void Initialize()
         {
+            _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterTypeForNavigation<InventoryView>();
+            _container.RegisterTypeForNavigation<SaleView>();
+
+
+            ViewModelLocationProvider.SetDefaultViewModelFactory((type) => _container.Resolve(type));
 
             var region = _regionManager.Regions[RegionNameCollection.CoreRegion];
-            region.Add(_container.Resolve<InventoryView>());
-
-            _regionManager.RequestNavigate(RegionNameCollection.CoreRegion, typeof(InventoryView).FullName);
+            region.Add(_container.Resolve<MainView>());
+            
+            _regionManager.RequestNavigate(RegionNameCollection.CoreRegion, typeof(MainView).FullName);
         }
     }
 }
