@@ -5,12 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:utils="clr-namespace:WiiMix.SaleInventory.Utils"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:ctrlHelper="clr-namespace:WiiMix.SaleInventory.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-       
-        <TabControl prism:RegionManager.RegionName="{x:Static utils:RegionNameCollection.MainRegion}"/>
-
+    <Grid Margin="0,0,0,0">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../Styles/Controls.TabControl.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+                <SolidColorBrush x:Key="HeaderBackground" Color="#FF1377A7"/>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <TabControl prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.MainRegion}">
+           <TabControl.Resources>
+                <Style TargetType="TabItem"
+                       BasedOn="{StaticResource MetroTabItem}">
+                   <Setter Property="Header" Value="{Binding DataContext.Title}"/>
+                   <Setter Property="Padding" Value="6,10"/>
+                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="16"/>
+                </Style>
+                <Style TargetType="TabControl"
+                       BasedOn="{StaticResource MetroTabControl}">
+                    <Setter Property="ctrlHelper:TabControlHelper.HeaderPanelBackgroundBrush" Value="{StaticResource HeaderBackground}"></Setter>
+                </Style>
+            </TabControl.Resources>
+        </TabControl>
     </Grid>
 </UserControl>

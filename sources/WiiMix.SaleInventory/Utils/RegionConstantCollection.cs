@@ -1,6 +1,6 @@
 ﻿namespace WiiMix.SaleInventory.Utils
 {
-    public class RegionNameCollection
+    public class RegionConstantCollection
     {
         public const string CoreRegion = "CoreRegion";
         public const string MainRegion = "MainRegion";

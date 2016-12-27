@@ -1,8 +1,5 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Mvvm;
+using WiiMix.SaleInventory.Utils;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
@@ -11,6 +8,11 @@ namespace WiiMix.SaleInventory.ViewModels
         public SaleViewModel()
         {
 
+        }
+
+        public string Title
+        {
+            get { return ModuleConstantCollection.SaleHeaderTitle; }
         }
     }
 }

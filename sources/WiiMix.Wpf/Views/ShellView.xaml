@@ -14,13 +14,12 @@
         Width="525"
         BorderBrush="{DynamicResource AccentColorBrush4}"
         BorderThickness="1"
-        Background="{DynamicResource AccentBaseColorBrush}"
+        NonActiveWindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
         WindowStartupLocation="CenterScreen"
         Title="Sale and Inventory">
     <Grid>
         <!--<local:ApplicationBrandName VerticalAlignment="Center"
                                     HorizontalAlignment="Center"/>-->
-        <ContentControl prism:RegionManager.RegionName="{x:Static utils:RegionNameCollection.CoreRegion}"
-                        Margin="20"/>
+        <ContentControl prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.CoreRegion}"/>
     </Grid>
 </controls:MetroWindow>
