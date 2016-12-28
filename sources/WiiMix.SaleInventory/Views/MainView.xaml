@@ -27,10 +27,11 @@
                        BasedOn="{StaticResource MetroTabItem}">
                    <Setter Property="Header" Value="{Binding DataContext.Title}"/>
                    <Setter Property="Padding" Value="20,10"/>
-                   <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="16"/>
+                   <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="14"/>
                 </Style>
                 <Style TargetType="TabControl"
                        BasedOn="{StaticResource MetroTabControl}">
+                    <Setter Property="TabStripPlacement" Value="Top"/>
                     <Setter Property="BorderBrush" Value="{StaticResource HeaderContentDividerBorderBrush}"/>
                     <Setter Property="BorderThickness" Value="0,1,0,0"/>
                     <Setter Property="ctrlHelper:TabControlHelper.HeaderPanelBackgroundBrush" Value="{StaticResource HeaderBackground}"/>

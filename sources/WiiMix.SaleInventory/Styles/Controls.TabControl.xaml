@@ -53,7 +53,7 @@
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
-                            <Setter TargetName="HeaderPanel" Property="Margin" Value="2 0 2 2" />
+                            <Setter TargetName="HeaderPanel" Property="Margin" Value="0 0 0 0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
                         </Trigger>
@@ -64,7 +64,7 @@
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Margin" Value="2 2 0 2" />
+                            <Setter TargetName="HeaderPanel" Property="Margin" Value="0 0 0 0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
                         </Trigger>
@@ -75,7 +75,7 @@
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Margin" Value="0 2 2 2" />
+                            <Setter TargetName="HeaderPanel" Property="Margin" Value="0 0 0 0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
                         </Trigger>
@@ -146,13 +146,15 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Row1" Property="Height" Value="0"/>
+                            <Setter TargetName="Col0" Property="Width" Value="*"/>
+                            <Setter TargetName="Col1" Property="Width" Value="Auto"/>
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
-                            <Setter TargetName="Underline" Property="Margin" Value="1 0 0 0" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0 0 0 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
@@ -171,18 +173,20 @@
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Row1" Property="Height" Value="0" />
+                            <Setter TargetName="Col0" Property="Width" Value="Auto"/>
+                            <Setter TargetName="Col1" Property="Width" Value="*"/>
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 0 1 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
                             <Setter TargetName="Col1" Property="Width" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="2" />
-                            <Setter TargetName="Underline" Property="Margin" Value="0 0 0 1" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0 0 0 0" />
                             <Setter TargetName="Underline" Property="Width" Value="Auto" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
