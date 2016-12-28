@@ -3,8 +3,8 @@
                     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:ctrlHelper="clr-namespace:WiiMix.SaleInventory.Controls">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    <Style x:Key="MetroTabControl" 
-                   TargetType="{x:Type TabControl}">
+    <Style x:Key="MetroTabControl"
+           TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -25,7 +25,7 @@
                                   Grid.Column="0"
                                   Panel.ZIndex="1"
                                   IsItemsHost="true"
-                                  KeyboardNavigation.TabIndex="1"/>
+                                  KeyboardNavigation.TabIndex="1"  FlowDirection="RightToLeft"/>
                         <Border x:Name="ContentPanel"
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -43,6 +43,13 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Top">
+                            <Setter TargetName="ContentPanel" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="HeaderPanel" Property="Margin" Value="0" />
+                            <Setter TargetName="RowDefinition0" Property="Height" Value="Auto" />
+                            <Setter TargetName="RowDefinition1" Property="Height" Value="*" />
+                        </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
                             <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
@@ -94,16 +101,25 @@
         <Setter Property="MinWidth" Value="5" />
         <Setter Property="Padding" Value="6 2 6 2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Height" Value="Auto"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Border x:Name="Border"
                             HorizontalAlignment="Stretch"
-                            Background="{TemplateBinding Background}"
+                            Background="Transparent"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" x:Name="Col0"/>
+                                <ColumnDefinition Width="0" x:Name="Col1"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" x:Name="Row0"/>
+                                <RowDefinition Height="Auto" x:Name="Row1"/>
+                            </Grid.RowDefinitions>                           
                             <controls:ContentControlEx x:Name="ContentSite"
                                                        Padding="{TemplateBinding Padding}"
                                                        Foreground="{TemplateBinding Foreground}"
@@ -116,44 +132,55 @@
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       DockPanel.Dock="Top"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"                                                       
                                                        RecognizesAccessKey="True"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                             <Rectangle x:Name="Underline"
                                        Height="2"
-                                       Margin="0 1 0 0"
+                                       Margin="0,0,0,-5"
                                        HorizontalAlignment="Stretch"
-                                       DockPanel.Dock="Bottom"
-                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        </DockPanel>
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Visibility="Hidden" />                        
+                        </Grid>                        
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Left" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Row1" Property="Height" Value="0"/>
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
                             <Setter TargetName="Underline" Property="Margin" Value="1 0 0 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Top" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Col1" Property="Width" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="2" />
-                            <Setter TargetName="Underline" Property="Margin" Value="0 1 0 0" />
-                            <Setter TargetName="Underline" Property="Width" Value="Auto" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0" />
+                            <Setter TargetName="Underline" Property="Width" Value="Auto" />                            
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Right" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Row1" Property="Height" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 0 1 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Col1" Property="Width" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="2" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 0 0 1" />
                             <Setter TargetName="Underline" Property="Width" Value="Auto" />
@@ -161,15 +188,20 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource WhiteColorBrush}" />
                             <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource WhiteColorBrush}" />
+                            <Setter TargetName="Underline" Property="Visibility" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(ctrlHelper:TabControlHelper.HeaderPanelMouseHoverBackgroundBrush)}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="false">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
                             <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter TargetName="Underline" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                         <Trigger SourceName="ContentSite" Property="IsMouseOver" Value="True">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="ContentSite" Property="TextElement.Cursor" Value="Hand"/>
+                            <Setter TargetName="Underline" Property="Visibility" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(ctrlHelper:TabControlHelper.HeaderPanelMouseHoverBackgroundBrush)}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -178,10 +210,11 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush10}" />
                             <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayBrush10}" />
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(ctrlHelper:TabControlHelper.HeaderPanelMouseHoverBackgroundBrush)}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>  
 </ResourceDictionary>

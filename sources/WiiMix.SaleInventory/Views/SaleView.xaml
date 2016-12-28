@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-           <TextBlock Text="Sale view"/> 
+        <controls:Tile Content="Sale View" Title="myTab" HorizontalTitleAlignment="Right"/>
     </Grid>
 </UserControl>
