@@ -7,8 +7,8 @@
     <ProjectGuid>{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WiiMix.Entity</RootNamespace>
-    <AssemblyName>WiiMix.Entity</AssemblyName>
+    <RootNamespace>WiiMix.Data</RootNamespace>
+    <AssemblyName>WiiMix.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brand.cs" />
-    <Compile Include="Category.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Entities\Brand.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Config.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stock.cs" />
-    <Compile Include="StockConfig.cs" />
+    <Compile Include="Entities\Stock.cs" />
+    <Compile Include="Entities\StockConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

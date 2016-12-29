@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Wpf", "WiiMix.Wpf\Wi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.SaleInventory", "WiiMix.SaleInventory\WiiMix.SaleInventory.csproj", "{E3C8657B-E987-46FE-8F76-143ADEABF472}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Entity", "WiiMix.Entity\WiiMix.Entity.csproj", "{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Data", "WiiMix.Data\WiiMix.Data.csproj", "{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

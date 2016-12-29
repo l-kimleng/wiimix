@@ -1,4 +1,4 @@
-﻿namespace WiiMix.Entity
+﻿namespace WiiMix.Data.Entities
 {
     public class Product
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WiiMix.Entity
+namespace WiiMix.Data.Entities
 {
     public class Stock
     {
