@@ -10,6 +10,6 @@ namespace WiiMix.Data.Entities
         public double Quantity { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public virtual ICollection<StockConfig> Details { get; set; }
+        public virtual ICollection<Config> Details { get; set; }
     }
 }

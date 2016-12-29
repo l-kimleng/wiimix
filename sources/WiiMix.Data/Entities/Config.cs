@@ -1,13 +1,16 @@
-﻿namespace WiiMix.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace WiiMix.Data.Entities
 {
     public class Config
     {
-        public int Id { get; set; }
         public string Feature { get; set; }
         public decimal Price { get; set; }
         public string Image { get; set; }
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+
+        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }
