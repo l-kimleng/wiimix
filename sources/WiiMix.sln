@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Wpf", "WiiMix.Wpf\Wi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.SaleInventory", "WiiMix.SaleInventory\WiiMix.SaleInventory.csproj", "{E3C8657B-E987-46FE-8F76-143ADEABF472}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Entity", "WiiMix.Entity\WiiMix.Entity.csproj", "{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E3C8657B-E987-46FE-8F76-143ADEABF472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3C8657B-E987-46FE-8F76-143ADEABF472}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3C8657B-E987-46FE-8F76-143ADEABF472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
