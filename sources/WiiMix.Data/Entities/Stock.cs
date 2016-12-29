@@ -7,7 +7,7 @@ namespace WiiMix.Data.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public double Quantity { get; set; }
+        public float Quantity { get; set; }
         public decimal TotalPrice { get; set; }
 
         public virtual ICollection<Config> Details { get; set; }

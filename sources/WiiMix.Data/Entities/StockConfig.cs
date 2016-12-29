@@ -8,6 +8,6 @@
         public int StockId { get; set; }
         public virtual Stock Stock { get; set; }
 
-        public double Quantity { get; set; }
+        public float Quantity { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
 
             Property(x => x.Quantity)
                 .HasColumnType("Real");
+                
 
             Property(x => x.TotalPrice)
-                .HasColumnType("Money")
-                .HasPrecision(byte.Parse("2"), byte.Parse("5"));
+                .HasColumnType("Money");
 
             HasMany(x => x.Details)
                 .WithMany(x => x.Stocks)

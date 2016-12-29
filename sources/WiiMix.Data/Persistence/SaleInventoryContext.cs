@@ -16,7 +16,7 @@ namespace WiiMix.Data.Persistence
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<StockConfig> StockConfigs { get; set; }
+        //public virtual DbSet<StockConfig> StockConfigs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,7 +25,7 @@ namespace WiiMix.Data.Persistence
             modelBuilder.Configurations.Add(new BrandConfiguration());
             modelBuilder.Configurations.Add(new ConfigConfiguration());
             modelBuilder.Configurations.Add(new StockConfiguration());
-            modelBuilder.Configurations.Add(new StockConfigConfiguration());
+            //modelBuilder.Configurations.Add(new StockConfigConfiguration());
         }
     }
 }

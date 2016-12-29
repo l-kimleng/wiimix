@@ -54,6 +54,11 @@
     <Compile Include="Entities\Config.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Migrations\201612291025239_InitalizeModel.cs" />
+    <Compile Include="Migrations\201612291025239_InitalizeModel.Designer.cs">
+      <DependentUpon>201612291025239_InitalizeModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\BrandConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CategoryConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\ConfigConfiguration.cs" />
@@ -68,7 +73,11 @@
     <Compile Include="Entities\StockConfig.cs" />
     <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612291025239_InitalizeModel.resx">
+      <DependentUpon>201612291025239_InitalizeModel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

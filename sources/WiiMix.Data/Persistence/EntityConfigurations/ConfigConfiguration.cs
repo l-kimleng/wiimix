@@ -12,8 +12,7 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
                 .HasMaxLength(300);
 
             Property(x => x.Price)
-                .HasColumnType("Money")
-                .HasPrecision(byte.Parse("2"), byte.Parse("5"));
+                .HasColumnType("Money");
 
             Property(x => x.Image)
                 .HasColumnType("VarChar")
