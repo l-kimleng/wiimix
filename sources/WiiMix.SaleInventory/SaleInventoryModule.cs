@@ -22,7 +22,8 @@ namespace WiiMix.SaleInventory
         public void Initialize()
         {
             _container.RegisterTypeForNavigation<MainView>();
-         
+            _container.RegisterType<object,ProductView>("Inventory/ProductView");
+            _container.RegisterType<object,StockView>("Inventory/StockView");
 
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) => _container.Resolve(type));
 
@@ -32,6 +33,9 @@ namespace WiiMix.SaleInventory
             _regionManager.RegisterViewWithRegion(RegionConstantCollection.MainRegion, typeof(InventoryView));
             _regionManager.RegisterViewWithRegion(RegionConstantCollection.MainRegion, typeof(SaleView));
 
+            _regionManager.RegisterViewWithRegion(RegionConstantCollection.InventoryRegion, typeof(ProductView));
+            _regionManager.RegisterViewWithRegion(RegionConstantCollection.InventoryRegion, typeof(StockView));
+            
             _regionManager.RequestNavigate(RegionConstantCollection.CoreRegion, typeof(MainView).FullName);
         }
     }

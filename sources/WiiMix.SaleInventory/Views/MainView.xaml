@@ -20,15 +20,16 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <TabControl prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.MainRegion}">
+        <TabControl prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.MainRegion}"
+                    Padding="0">
            <TabControl.Resources>
                 <Style TargetType="TabItem"
                        BasedOn="{StaticResource MetroTabItem}">
                    <Setter Property="Header" Value="{Binding DataContext.Title}"/>
                    <Setter Property="Padding" Value="20,10"/>
-                    <Setter Property="FontFamily" Value="{StaticResource TabItemHeaderFontFamily}"/>
-                    <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Upper"/>
-                    <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold"/>
+                   <Setter Property="FontFamily" Value="{StaticResource TabItemHeaderFontFamily}"/>
+                   <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Upper"/>
+                   <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold"/>
                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="14"/>
                 </Style>
                 <Style TargetType="TabControl"
