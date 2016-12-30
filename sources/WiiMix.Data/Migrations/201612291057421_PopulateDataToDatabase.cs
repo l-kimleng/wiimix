@@ -6,27 +6,27 @@ namespace WiiMix.Data.Migrations
     {
         public override void Up()
         {
-            Sql("INSERT INTO Categories(Id, Name) VALUES(1, 'Card Reader')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(2, 'Computers')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(3, 'Headphones')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(4, 'Ipad')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(5, 'Memory Cards')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(6, 'Mobiles')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(7, 'Operating System')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(8, 'Pen Drives')");
-            Sql("INSERT INTO Categories(Id, Name) VALUES(9, 'Tablets')");
+            Sql("INSERT INTO Categories(Name) VALUES('Card Reader')");
+            Sql("INSERT INTO Categories(Name) VALUES('Computers')");
+            Sql("INSERT INTO Categories(Name) VALUES('Headphones')");
+            Sql("INSERT INTO Categories(Name) VALUES('IPad')");
+            Sql("INSERT INTO Categories(Name) VALUES('Memory Cards')");
+            Sql("INSERT INTO Categories(Name) VALUES('Mobiles')");
+            Sql("INSERT INTO Categories(Name) VALUES('Operating System')");
+            Sql("INSERT INTO Categories(Name) VALUES('Pen Drives')");
+            Sql("INSERT INTO Categories(Name) VALUES('Tablets')");
 
-            Sql("INSERT INTO Brands(Id, Name) VALUES(1, 'Apple')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(2, 'Dell')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(3, 'HP')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(4, 'LG')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(5, 'Microsoft Corporations')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(6, 'Moserbear')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(7, 'Panasonic')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(8, 'Philips')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(9, 'Samsung Electronics ltd.')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(10, 'Sandisk')");
-            Sql("INSERT INTO Brands(Id, Name) VALUES(11, 'Sony Inc.')");
+            Sql("INSERT INTO Brands(Name) VALUES('Apple')");
+            Sql("INSERT INTO Brands(Name) VALUES('Dell')");
+            Sql("INSERT INTO Brands(Name) VALUES('HP')");
+            Sql("INSERT INTO Brands(Name) VALUES('LG')");
+            Sql("INSERT INTO Brands(Name) VALUES('Microsoft Corporations')");
+            Sql("INSERT INTO Brands(Name) VALUES('Moserbear')");
+            Sql("INSERT INTO Brands(Name) VALUES('Panasonic')");
+            Sql("INSERT INTO Brands(Name) VALUES('Philips')");
+            Sql("INSERT INTO Brands(Name) VALUES('Samsung Electronics ltd.')");
+            Sql("INSERT INTO Brands(Name) VALUES('Sandisk')");
+            Sql("INSERT INTO Brands(Name) VALUES('Sony Inc.')");
         }
         
         public override void Down()
