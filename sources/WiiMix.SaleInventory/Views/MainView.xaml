@@ -15,10 +15,11 @@
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="../Styles/Controls.TabControl.xaml"/>
+                    <ResourceDictionary Source="../Styles/Fonts.xaml"></ResourceDictionary>
                 </ResourceDictionary.MergedDictionaries>
-                <SolidColorBrush x:Key="HeaderBackground" Color="#FF1377A7"/>
+                <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource AccentBaseColor}"/>
                 <SolidColorBrush x:Key="HeaderMouseHoverBackground" Color="#3FFFFFFF"/>
-                <SolidColorBrush x:Key="HeaderContentDividerBorderBrush" Color="#035C86"/>
+                <SolidColorBrush x:Key="HeaderContentDividerBorderBrush" Color="{DynamicResource Gray2}"/>
             </ResourceDictionary>
         </Grid.Resources>
         <TabControl prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.MainRegion}">
@@ -27,6 +28,9 @@
                        BasedOn="{StaticResource MetroTabItem}">
                    <Setter Property="Header" Value="{Binding DataContext.Title}"/>
                    <Setter Property="Padding" Value="20,10"/>
+                    <Setter Property="FontFamily" Value="{StaticResource TabItemHeaderFontFamily}"/>
+                    <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Upper"/>
+                    <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold"/>
                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="14"/>
                 </Style>
                 <Style TargetType="TabControl"

@@ -196,8 +196,8 @@
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(ctrlHelper:TabControlHelper.HeaderPanelMouseHoverBackgroundBrush)}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
-                            <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="Underline" Property="Fill" Value="{DynamicResource GrayBrush1}" />
                             <Setter TargetName="Underline" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                         <Trigger SourceName="ContentSite" Property="IsMouseOver" Value="True">
