@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="HeaderBackground" Color="{DynamicResource AccentBaseColor}"/>
     <SolidColorBrush x:Key="HamburgerButtonForegackground" Color="{DynamicResource HighlightColor}"/>
-    <SolidColorBrush x:Key="HamburgerBackground" Color="{DynamicResource WhiteColor}"/>
+    <SolidColorBrush x:Key="HamburgerBackground" Color="#81F4F2F2"/>
     <SolidColorBrush x:Key="HeaderMouseHoverBackground" Color="#3FFFFFFF"/>
     <SolidColorBrush x:Key="HeaderContentDividerBorderBrush" Color="{DynamicResource Gray2}"/>
 </ResourceDictionary>

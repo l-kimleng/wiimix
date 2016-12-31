@@ -16,42 +16,42 @@
     </Style>
     
     <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
-        <Grid Height="48">
+        <Grid Height="64">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="48" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ContentControl Grid.Column="0"
-                                Content="{Binding Tag}"
-                                Focusable="False"
-                                Foreground="White"
-                                IsTabStop="False" />
+                            Content="{Binding Tag}"
+                            Focusable="False"
+                            Foreground="{StaticResource HamburgerButtonForegackground}"
+                            IsTabStop="False" />
             <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Foreground="{StaticResource HamburgerButtonForegackground}"
-                           Text="{Binding Label}" />
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       Foreground="{StaticResource HamburgerButtonForegackground}"
+                       Text="{Binding Label}" />
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
-       
-        <Grid Height="48">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Image Margin="5"
-                       HorizontalAlignment="Center"
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Margin="5"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Source="{Binding Glyph}"
+                   ToolTip="{Binding Label}"
+                   Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1"
                        VerticalAlignment="Center"
-                       Source="{Binding Glyph}"
-                       Stretch="UniformToFill" />
-            <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Foreground="{StaticResource HamburgerButtonForegackground}"
-                           Text="{Binding Label}" />
-        </Grid>
+                       FontSize="16"
+                       Foreground="{StaticResource HamburgerButtonForegackground}"
+                       Text="{Binding Label}" />
+            </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

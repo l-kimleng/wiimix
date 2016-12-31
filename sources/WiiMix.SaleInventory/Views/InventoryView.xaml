@@ -5,7 +5,14 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:utils="clr-namespace:WiiMix.SaleInventory.Utils"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance viewModels:InventoryViewModel}">
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -18,20 +25,19 @@
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Style="{StaticResource HamburgerMenu}"
-                                ItemClick="HamburgerMenu_OnItemClick"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
                                 prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.InventoryRegion}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">
-                    <i:InvokeCommandAction Command="{Binding ItemClickCommand}" CommandParameter="Inventory/StockView" />
+                    <i:InvokeCommandAction Command="{Binding ItemClickCommand}"
+                                           CommandParameter="{Binding ElementName=HamburgerMenuControl}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Glyph="../Assets/Photos/Basket-WF.bmp" Label="Giant slab in Oregon" Tag="Inventory/ProductView" />
-                    <controls:HamburgerMenuGlyphItem Glyph="../Assets/Photos/Arrow-WF.bmp" Label="Lake Ann Mushroom" Tag="Inventory/StockView"/>
+                    <controls:HamburgerMenuGlyphItem Glyph="../Assets/Photos/trolley.png" Label="Product" Tag="Inventory/ProductView" />
+                    <controls:HamburgerMenuGlyphItem Glyph="../Assets/Photos/stock.png" Label="Stock" Tag="Inventory/StockView"/>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.ItemsSource>
         </controls:HamburgerMenu>

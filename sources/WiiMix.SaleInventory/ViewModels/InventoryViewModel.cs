@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using MahApps.Metro.Controls;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Windows.Input;
@@ -9,8 +10,6 @@ namespace WiiMix.SaleInventory.ViewModels
     public class InventoryViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager _regionManager;
-        private static bool test = false;
-
         public InventoryViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
@@ -19,15 +18,14 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnItemClick(object obj)
         {
-            var str = (test) ? "Inventory/StockView" : "Inventory/ProductView";
-            _regionManager.RequestNavigate(Utils.RegionConstantCollection.InventoryRegion, str);
-            test = !test;
+            var hamburgerMenu = obj as HamburgerMenu;
+            if (hamburgerMenu == null) return;
+            var selectedItem = hamburgerMenu.SelectedItem;
+            var menu = selectedItem as HamburgerMenuItem;
+            _regionManager.RequestNavigate(Utils.RegionConstantCollection.InventoryRegion, menu?.Tag.ToString() ?? "");
         }
 
-        public string Title
-        {
-            get { return ModuleConstantCollection.InventoryHeaderTitle; }
-        }
+        public string Title => ModuleConstantCollection.InventoryHeaderTitle;
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {

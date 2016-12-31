@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace WiiMix.SaleInventory.Views
 {
@@ -11,12 +10,6 @@ namespace WiiMix.SaleInventory.Views
         public InventoryView()
         {
             InitializeComponent();
-        }
-
-        private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            var myMenuItem = e.ClickedItem as HamburgerMenuItem;
-            var myView = myMenuItem.Tag.ToString();
         }
     }
 }
