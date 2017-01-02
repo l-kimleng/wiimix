@@ -62,6 +62,10 @@
     <Compile Include="Migrations\201612291057421_PopulateDataToDatabase.Designer.cs">
       <DependentUpon>201612291057421_PopulateDataToDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701020440326_PopulateProductData.cs" />
+    <Compile Include="Migrations\201701020440326_PopulateProductData.Designer.cs">
+      <DependentUpon>201701020440326_PopulateProductData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\BrandConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CategoryConfiguration.cs" />
@@ -85,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612291057421_PopulateDataToDatabase.resx">
       <DependentUpon>201612291057421_PopulateDataToDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701020440326_PopulateProductData.resx">
+      <DependentUpon>201701020440326_PopulateProductData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
