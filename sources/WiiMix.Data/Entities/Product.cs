@@ -12,5 +12,10 @@
         public virtual Brand Brand { get; set; }
 
         public virtual Config Config { get; set; }
+
+        public Product()
+        {
+            Config = new Config();
+        }
     }
 }

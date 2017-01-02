@@ -3,6 +3,10 @@ using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
+using WiiMix.Data;
+using WiiMix.Data.Persistence;
+using WiiMix.Data.Persistence.Repositories;
+using WiiMix.Data.Repositories;
 using WiiMix.SaleInventory.Utils;
 using WiiMix.SaleInventory.Views;
 
@@ -21,6 +25,9 @@ namespace WiiMix.SaleInventory
 
         public void Initialize()
         {
+            _container.RegisterType<IUnitOfWork, UnitOfWork>();
+            _container.RegisterType<IProductRepository, ProductRepository>();
+
             _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterType<object,ProductView>("Inventory/ProductView");
             _container.RegisterType<object,StockView>("Inventory/StockView");

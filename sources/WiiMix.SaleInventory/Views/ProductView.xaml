@@ -48,11 +48,21 @@
                              controls:TextBoxHelper.Watermark="Enter product name..."/>
                 </DockPanel>
             </Border>
-        
-            <Border Grid.Row="1" Padding="10, 10, 10, 0">
-                <DataGrid AutoGenerateColumns="True"
-                          ItemsSource="{Binding}"
-                          Style="{DynamicResource AzureDataGrid}"/>
-            </Border>
+
+        <Border Grid.Row="1" Padding="10, 10, 10, 0">
+            <DataGrid AutoGenerateColumns="False"
+                          ItemsSource="{Binding Products}"
+                          Style="{DynamicResource AzureDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Product Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Category" Binding="{Binding CategoryName}"/>
+                    <DataGridTextColumn Header="Brand" Binding="{Binding BrandName}"/>
+                    <DataGridTextColumn Header="Feature" Binding="{Binding Feature}"/>
+                    <DataGridTextColumn Header="Image" Binding="{Binding Image}"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
 </UserControl>
