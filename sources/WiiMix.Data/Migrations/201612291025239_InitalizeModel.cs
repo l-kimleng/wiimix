@@ -1,8 +1,7 @@
 namespace WiiMix.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitalizeModel : DbMigration
     {
         public override void Up()
@@ -66,7 +65,7 @@ namespace WiiMix.Data.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.StockConfig",
+                "dbo.StockDetail",
                 c => new
                     {
                         StockId = c.Int(nullable: false),
@@ -83,16 +82,16 @@ namespace WiiMix.Data.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Configs", "Product_Id", "dbo.Products");
-            DropForeignKey("dbo.StockConfig", "ConfigId", "dbo.Configs");
-            DropForeignKey("dbo.StockConfig", "StockId", "dbo.Stocks");
+            DropForeignKey("dbo.StockDetail", "ConfigId", "dbo.Configs");
+            DropForeignKey("dbo.StockDetail", "StockId", "dbo.Stocks");
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Products", "BrandId", "dbo.Brands");
-            DropIndex("dbo.StockConfig", new[] { "ConfigId" });
-            DropIndex("dbo.StockConfig", new[] { "StockId" });
+            DropIndex("dbo.StockDetail", new[] { "ConfigId" });
+            DropIndex("dbo.StockDetail", new[] { "StockId" });
             DropIndex("dbo.Configs", new[] { "Product_Id" });
             DropIndex("dbo.Products", new[] { "BrandId" });
             DropIndex("dbo.Products", new[] { "CategoryId" });
-            DropTable("dbo.StockConfig");
+            DropTable("dbo.StockDetail");
             DropTable("dbo.Stocks");
             DropTable("dbo.Configs");
             DropTable("dbo.Categories");

@@ -13,6 +13,8 @@
 
         public virtual Config Config { get; set; }
 
+        public virtual StockDetail StockDetail { get; set; }
+
         public Product()
         {
             Config = new Config();

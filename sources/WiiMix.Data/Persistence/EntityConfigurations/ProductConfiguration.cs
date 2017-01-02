@@ -23,7 +23,7 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
                 .WillCascadeOnDelete(false);
 
             HasOptional(x => x.Config)
-                .WithOptionalPrincipal(x => x.Product);
+                .WithRequired(x => x.Product);
 
         }
     }

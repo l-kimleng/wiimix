@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using WiiMix.Data.Entities;
 
 namespace WiiMix.Data.Persistence.EntityConfigurations
@@ -18,7 +19,9 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
                 .HasColumnType("VarChar")
                 .HasMaxLength(125);
 
-            HasKey(x => x.ProductId);
+            HasKey(x => x.ProductId)
+                .Property(x => x.ProductId)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

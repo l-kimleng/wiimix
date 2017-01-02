@@ -3,13 +3,15 @@ using WiiMix.Data.Entities;
 
 namespace WiiMix.Data.Persistence.EntityConfigurations
 {
-    public class StockConfigConfiguration : EntityTypeConfiguration<StockConfig>
+    public class StockDetailConfiguration : EntityTypeConfiguration<StockDetail>
     {
-        public StockConfigConfiguration()
+        public StockDetailConfiguration()
         {
             Property(x => x.Quantity)
                 .HasColumnType("Real")
                 .IsRequired();
+
+            HasKey(x => new {x.ProductId, x.StockId});
         }
     }
 }

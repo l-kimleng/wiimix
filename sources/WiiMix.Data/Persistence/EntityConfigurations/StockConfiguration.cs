@@ -14,18 +14,8 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
             Property(x => x.Quantity)
                 .HasColumnType("Real");
                 
-
             Property(x => x.TotalPrice)
                 .HasColumnType("Money");
-
-            HasMany(x => x.Details)
-                .WithMany(x => x.Stocks)
-                .Map(m =>
-                {
-                    m.ToTable("StockConfig");
-                    m.MapLeftKey("StockId");
-                    m.MapRightKey("ConfigId");
-                });
         }
     }
 }

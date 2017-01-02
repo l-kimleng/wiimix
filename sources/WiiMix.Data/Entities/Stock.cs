@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WiiMix.Data.Entities
 {
@@ -10,6 +9,6 @@ namespace WiiMix.Data.Entities
         public float Quantity { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public virtual ICollection<Config> Details { get; set; }
+        public virtual StockDetail Detail { get; set; }
     }
 }
