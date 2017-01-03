@@ -39,7 +39,7 @@
                            
                         </StackPanel.Resources>
                         <Button Content="{iconPacks:PackIconModern Kind=Add}" Margin="0, 0, 10, 0" Foreground="Blue"/>
-                        <Button Content="{iconPacks:PackIconModern Kind=Edit}" Margin="0, 0, 10, 0" Foreground="Green"/>
+                        <Button Content="{iconPacks:PackIconModern Kind=Edit}" Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedProduct}" Margin="0, 0, 10, 0" Foreground="Green"/>
                         <Button Content="{iconPacks:PackIconModern Kind=Delete}" Margin="0, 0, 10, 0" Foreground="Red"/>
                         <Button Content="{iconPacks:PackIconModern Kind=OfficeExcel}" Margin="0, 0, 0, 0" Foreground="Orange"/>
                     </StackPanel>
@@ -51,17 +51,25 @@
 
         <Border Grid.Row="1" Padding="10, 10, 10, 0">
             <DataGrid AutoGenerateColumns="False"
-                          ItemsSource="{Binding Products}"
-                          Style="{DynamicResource AzureDataGrid}">
+                      ItemsSource="{Binding Products}"
+                      Style="{DynamicResource AzureDataGrid}"
+                      SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+                      RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Product Name" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Category" Binding="{Binding CategoryName}"/>
-                    <DataGridTextColumn Header="Brand" Binding="{Binding BrandName}"/>
-                    <DataGridTextColumn Header="Feature" Binding="{Binding Feature}"/>
-                    <DataGridTextColumn Header="Image" Binding="{Binding Image}"/>
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}"/>
+                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand.Name}"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Config.Price, StringFormat=C2}"/>
                 </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left" Source="{Binding Config.Image}" Width="72" Height="72" Margin="25,0,0,0"/>
+                            <TextBlock Text="{Binding Config.Feature}" TextAlignment="Justify" TextWrapping="NoWrap"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
             </DataGrid>
         </Border>
     </Grid>
