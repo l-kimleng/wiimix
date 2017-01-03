@@ -1,4 +1,6 @@
-﻿namespace WiiMix.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace WiiMix.Data.Entities
 {
     public class Product
     {
@@ -13,7 +15,7 @@
 
         public virtual Config Config { get; set; }
 
-        public virtual StockDetail StockDetail { get; set; }
+        public virtual ICollection<StockDetail> Details { get; set; }
 
         public Product()
         {

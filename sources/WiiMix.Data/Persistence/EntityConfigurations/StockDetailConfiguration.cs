@@ -11,7 +11,15 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
                 .HasColumnType("Real")
                 .IsRequired();
 
-            HasKey(x => new {x.ProductId, x.StockId});
+            HasRequired(x => x.Product)
+                .WithMany(x => x.Details)
+                .HasForeignKey(x => x.ProductId)
+                .WillCascadeOnDelete(false);
+
+            HasRequired(x => x.Stock)
+                .WithMany(x => x.Details)
+                .HasForeignKey(x => x.StockId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

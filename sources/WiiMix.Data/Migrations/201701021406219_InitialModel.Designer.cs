@@ -7,13 +7,13 @@ namespace WiiMix.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitalizeModel : IMigrationMetadata
+    public sealed partial class InitialModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitalizeModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612291025239_InitalizeModel"; }
+            get { return "201701021406219_InitialModel"; }
         }
         
         string IMigrationMetadata.Source

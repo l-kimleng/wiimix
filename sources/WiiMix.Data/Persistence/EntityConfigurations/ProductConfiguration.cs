@@ -24,7 +24,6 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
 
             HasOptional(x => x.Config)
                 .WithRequired(x => x.Product);
-
         }
     }
 }

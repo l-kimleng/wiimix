@@ -54,21 +54,9 @@
     <Compile Include="Entities\Config.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="Migrations\201612291025239_InitalizeModel.cs" />
-    <Compile Include="Migrations\201612291025239_InitalizeModel.Designer.cs">
-      <DependentUpon>201612291025239_InitalizeModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612291057421_PopulateDataToDatabase.cs" />
-    <Compile Include="Migrations\201612291057421_PopulateDataToDatabase.Designer.cs">
-      <DependentUpon>201612291057421_PopulateDataToDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701020440326_PopulateProductData.cs" />
-    <Compile Include="Migrations\201701020440326_PopulateProductData.Designer.cs">
-      <DependentUpon>201701020440326_PopulateProductData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701020822563_FixConfigTable.cs" />
-    <Compile Include="Migrations\201701020822563_FixConfigTable.Designer.cs">
-      <DependentUpon>201701020822563_FixConfigTable.cs</DependentUpon>
+    <Compile Include="Migrations\201701021406219_InitialModel.cs" />
+    <Compile Include="Migrations\201701021406219_InitialModel.Designer.cs">
+      <DependentUpon>201701021406219_InitialModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\BrandConfiguration.cs" />
@@ -88,22 +76,13 @@
     <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612291025239_InitalizeModel.resx">
-      <DependentUpon>201612291025239_InitalizeModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612291057421_PopulateDataToDatabase.resx">
-      <DependentUpon>201612291057421_PopulateDataToDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701020440326_PopulateProductData.resx">
-      <DependentUpon>201701020440326_PopulateProductData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701020822563_FixConfigTable.resx">
-      <DependentUpon>201701020822563_FixConfigTable.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701021406219_InitialModel.resx">
+      <DependentUpon>201701021406219_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

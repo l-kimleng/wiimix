@@ -1,8 +1,9 @@
 namespace WiiMix.Data.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
-
-    public partial class InitalizeModel : DbMigration
+    
+    public partial class InitialModel : DbMigration
     {
         public override void Up()
         {
@@ -43,15 +44,29 @@ namespace WiiMix.Data.Migrations
                 "dbo.Configs",
                 c => new
                     {
-                        ProductId = c.Int(nullable: false, identity: true),
+                        ProductId = c.Int(nullable: false),
                         Feature = c.String(maxLength: 300),
                         Price = c.Decimal(nullable: false, storeType: "money"),
                         Image = c.String(maxLength: 125, unicode: false),
-                        Product_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.ProductId)
-                .ForeignKey("dbo.Products", t => t.Product_Id)
-                .Index(t => t.Product_Id);
+                .ForeignKey("dbo.Products", t => t.ProductId)
+                .Index(t => t.ProductId);
+            
+            CreateTable(
+                "dbo.StockDetails",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ProductId = c.Int(nullable: false),
+                        StockId = c.Int(nullable: false),
+                        Quantity = c.Single(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
+                .ForeignKey("dbo.Stocks", t => t.StockId, cascadeDelete: true)
+                .Index(t => t.ProductId)
+                .Index(t => t.StockId);
             
             CreateTable(
                 "dbo.Stocks",
@@ -64,35 +79,22 @@ namespace WiiMix.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.StockDetail",
-                c => new
-                    {
-                        StockId = c.Int(nullable: false),
-                        ConfigId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.StockId, t.ConfigId })
-                .ForeignKey("dbo.Stocks", t => t.StockId, cascadeDelete: true)
-                .ForeignKey("dbo.Configs", t => t.ConfigId, cascadeDelete: true)
-                .Index(t => t.StockId)
-                .Index(t => t.ConfigId);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Configs", "Product_Id", "dbo.Products");
-            DropForeignKey("dbo.StockDetail", "ConfigId", "dbo.Configs");
-            DropForeignKey("dbo.StockDetail", "StockId", "dbo.Stocks");
+            DropForeignKey("dbo.StockDetails", "StockId", "dbo.Stocks");
+            DropForeignKey("dbo.StockDetails", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.Configs", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Products", "BrandId", "dbo.Brands");
-            DropIndex("dbo.StockDetail", new[] { "ConfigId" });
-            DropIndex("dbo.StockDetail", new[] { "StockId" });
-            DropIndex("dbo.Configs", new[] { "Product_Id" });
+            DropIndex("dbo.StockDetails", new[] { "StockId" });
+            DropIndex("dbo.StockDetails", new[] { "ProductId" });
+            DropIndex("dbo.Configs", new[] { "ProductId" });
             DropIndex("dbo.Products", new[] { "BrandId" });
             DropIndex("dbo.Products", new[] { "CategoryId" });
-            DropTable("dbo.StockDetail");
             DropTable("dbo.Stocks");
+            DropTable("dbo.StockDetails");
             DropTable("dbo.Configs");
             DropTable("dbo.Categories");
             DropTable("dbo.Products");
