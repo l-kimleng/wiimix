@@ -10,7 +10,7 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
         {
             Property(x => x.Feature)
                 .HasColumnType("NVarChar")
-                .HasMaxLength(300);
+                .HasMaxLength(1000);
 
             Property(x => x.Price)
                 .HasColumnType("Money");

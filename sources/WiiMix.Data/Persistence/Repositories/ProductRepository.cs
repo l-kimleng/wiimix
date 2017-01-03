@@ -18,8 +18,7 @@ namespace WiiMix.Data.Persistence.Repositories
         {
             var products = _context.Products;
             return products.Include(c => c.Category)
-                .Include(b => b.Brand)
-                .Include(c => c.Config).ToList();
+                .Include(b => b.Brand).ToList();
         }
     }
 }

@@ -1,8 +1,7 @@
 namespace WiiMix.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitialModel : DbMigration
     {
         public override void Up()
@@ -45,7 +44,7 @@ namespace WiiMix.Data.Migrations
                 c => new
                     {
                         ProductId = c.Int(nullable: false),
-                        Feature = c.String(maxLength: 300),
+                        Feature = c.String(maxLength: 1000),
                         Price = c.Decimal(nullable: false, storeType: "money"),
                         Image = c.String(maxLength: 125, unicode: false),
                     })
