@@ -16,9 +16,16 @@ namespace WiiMix.Data.Persistence.Repositories
 
         public IEnumerable<Product> Display()
         {
-            var products = _context.Products;
-            return products.Include(c => c.Category)
-                .Include(b => b.Brand).ToList();
+            var products = _context.Products.Include(c => c.Category).Include(b => b.Brand);
+            var configs = _context.Configs.ToList();
+            IList<Product> productList = new List<Product>();
+            foreach (var product in products)
+            {
+                var config = configs.FirstOrDefault(x => x.ProductId == product.Id);
+                product.Update(config);
+                productList.Add(product);
+            }
+            return productList;
         }
     }
 }

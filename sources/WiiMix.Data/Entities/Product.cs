@@ -17,9 +17,20 @@ namespace WiiMix.Data.Entities
 
         public virtual ICollection<StockDetail> Details { get; set; }
 
-        public Product()
+        public void Update(Config config)
         {
-            Config = new Config();
+            if (config == null)
+            {
+                Config = new Config();
+                return;
+            }
+
+            Config = new Config
+            {
+                Feature = config.Feature,
+                Price = config.Price,
+                Image = Config.Image
+            };
         }
     }
 }
