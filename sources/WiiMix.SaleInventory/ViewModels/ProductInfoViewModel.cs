@@ -15,7 +15,7 @@ namespace WiiMix.SaleInventory.ViewModels
         private void OnUpdatedProdcut(Product updateProduct)
         {
             Product = updateProduct;
-            Title = $"Update Product: {Product.Name}"; // C# 6.0 string interpolation
+            Title = "Update Product";
         }
 
         private Product _product;

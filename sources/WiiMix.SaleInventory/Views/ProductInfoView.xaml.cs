@@ -17,14 +17,5 @@ namespace WiiMix.SaleInventory.Views
         {
             ShowDialog();
         }
-
-        //protected override void OnClosing(CancelEventArgs e)
-        //{
-        //    var field = typeof(Window).GetField("_isClosing", BindingFlags.Instance | BindingFlags.NonPublic);
-        //    if (field != null)
-        //        field.SetValue(this, false);
-        //    e.Cancel = true;
-        //    Hide();
-        //}
     }
 }

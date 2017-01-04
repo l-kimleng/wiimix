@@ -6,16 +6,22 @@
         mc:Ignorable="d"
         xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="{Binding Title}" Height="300" Width="300"
+        xmlns:ctrl="clr-namespace:WiiMix.SaleInventory.Controls"
+        Title="{Binding Title}"
         Style="{DynamicResource MyCleanWindowStyle}"
-        Icon="../Assets/Photos/trolley.png"
         d:DataContext="{d:DesignInstance viewModels:ProductInfoViewModel}"
         GlowBrush="{DynamicResource AccentColorBrush}"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ShowIconOnTitleBar="False"
+        Width="550" 
+        Height="450">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml" />
+                <ResourceDictionary Source="../Styles/Controls.TabControl.xaml"/>
+                <ResourceDictionary Source="../Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="../Styles/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="MyCleanWindowStyle" 
                    TargetType="{x:Type controls:MetroWindow}"
@@ -23,5 +29,87 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+        
+        <TabControl Padding="0"
+                    TabStripPlacement="Left">
+            <TabControl.Resources>
+                <Style TargetType="TabItem"
+                       BasedOn="{StaticResource MetroTabItem}">
+                    <Setter Property="Padding" Value="20,10"/>
+                    <Setter Property="FontFamily" Value="{StaticResource TabItemHeaderFontFamily}"/>
+                    <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Upper"/>
+                    <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold"/>
+                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="14"/>
+                </Style>
+                <Style TargetType="TabControl"
+                       BasedOn="{StaticResource MetroTabControl}">
+                    <Setter Property="TabStripPlacement" Value="Top"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource HeaderContentDividerBorderBrush}"/>
+                    <Setter Property="BorderThickness" Value="1,0,0,0"/>
+                    <Setter Property="ctrl:TabControlHelper.HeaderPanelBackgroundBrush" Value="{StaticResource HeaderBackground}"/>
+                    <Setter Property="ctrl:TabControlHelper.HeaderPanelMouseHoverBackgroundBrush" Value="{StaticResource HeaderMouseHoverBackground}"/>
+                    <Setter Property="controls:TabControlHelper.IsUnderlined" Value="True"/>
+                </Style>
+            </TabControl.Resources>
+            
+            <TabItem Header="Basic Info">
+                <Grid Margin="20">
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Control}">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </StackPanel.Resources>
+                                <TextBlock Text="Product Name" Margin="0,5" />
+                        <TextBox Text="{Binding Product.Name}" Margin="0,5"/>
+                        <TextBlock Text="Category" Margin="0,5"/>
+                        <ComboBox ItemsSource="{Binding Product.Category}" Margin="0,5" 
+                                          DisplayMemberPath="Name"/>
+                        <TextBlock Text="Brand"  Margin="0,5"/>
+                        <ComboBox ItemsSource="{Binding Product.Brand}" Margin="0,5"
+                                          DisplayMemberPath="Name"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="More">
+                <Grid Margin="20">
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Control}">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock Text="Photo" Margin="0,5"/>
+                        <DockPanel Margin="0,5" LastChildFill="False">
+                            <Border BorderThickness="1"
+                                    BorderBrush="LightGray"
+                                    DockPanel.Dock="Left">
+                                <Image Source="{Binding Product.Config.Image}" 
+                                   Height="72" 
+                                   Width="72"/>    
+                            </Border>
+                            <Button Content="Browse" DockPanel.Dock="Left"  Margin="0,5"/>
+                        </DockPanel>
+                        <TextBlock Text="Feature" Margin="0,5"/>
+                        <TextBox Text="{Binding Product.Config.Feature}" Margin="0,5" Height="75"/>
+                        <TextBlock Text="Price" Margin="0,5"/>
+                        <TextBox Text="{Binding Product.Config.Price, StringFormat=C2}" Margin="0,5"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    Background="WhiteSmoke">
+            <Button Content="Save" Margin="5"/>
+            <Button Content="Cancel" Margin="5"/>
+        </StackPanel>
     </Grid>
 </controls:MetroWindow>
+ 
