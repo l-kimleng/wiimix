@@ -123,7 +123,7 @@
     <Compile Include="Controls\TabControlHelper.cs" />
     <Compile Include="Events\ProductEvent.cs" />
     <Compile Include="IDialogService.cs" />
-    <Compile Include="IProductDialogView.cs" />
+    <Compile Include="IProductInfoView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -142,6 +142,7 @@
     <Compile Include="SaleInventoryModule.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ProductInfoViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
     <Compile Include="ViewModels\StockViewModel.cs" />
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductInfoView.xaml.cs">
+      <DependentUpon>ProductInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
@@ -194,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

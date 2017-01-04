@@ -27,7 +27,11 @@ namespace WiiMix.SaleInventory.ViewModels
         private void OnClickUpdatedCommand(Product product)
         {
             _eventAggregator.GetEvent<ProductUpdatedEvent>().Publish(product);
+            ProductInfoView.Display();
         }
+
+        [Microsoft.Practices.Unity.Dependency]
+        public IProductInfoView ProductInfoView { get; set; }
 
         private void GetAll()
         {
