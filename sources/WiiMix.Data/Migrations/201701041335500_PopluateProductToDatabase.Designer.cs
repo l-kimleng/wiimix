@@ -7,13 +7,13 @@ namespace WiiMix.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class PopulateProductToDatabase : IMigrationMetadata
+    public sealed partial class PopluateProductToDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateProductToDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PopluateProductToDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701030222418_PopulateProductToDatabase"; }
+            get { return "201701041335500_PopluateProductToDatabase"; }
         }
         
         string IMigrationMetadata.Source
