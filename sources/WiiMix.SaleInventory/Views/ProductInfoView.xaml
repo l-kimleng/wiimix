@@ -29,10 +29,10 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="48"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         
         <TabControl Padding="0"
                     TabStripPlacement="Left">
@@ -43,7 +43,7 @@
                     <Setter Property="FontFamily" Value="{StaticResource TabItemHeaderFontFamily}"/>
                     <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Upper"/>
                     <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold"/>
-                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="14"/>
+                    <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="12"/>
                 </Style>
                 <Style TargetType="TabControl"
                        BasedOn="{StaticResource MetroTabControl}">
@@ -104,11 +104,11 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
+        <StackPanel Grid.Column="1"
+                    Orientation="Vertical"
                     Background="WhiteSmoke">
             <Button Content="Save" Margin="5"/>
-            <Button Content="Cancel" Margin="5"/>
+            <Button Content="Cancel" Margin="5" Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

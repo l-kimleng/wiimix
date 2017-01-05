@@ -32,9 +32,8 @@ namespace WiiMix.SaleInventory
             _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterType<object,ProductView>("Inventory/ProductView");
             _container.RegisterType<object,StockView>("Inventory/StockView");
-            _container.RegisterType<IProductInfoView, ProductInfoView>(new ContainerControlledLifetimeManager());
-
-            _container.RegisterType<object, ProductInfoViewModel>();
+            _container.RegisterType<IProductInfoView, ProductInfoView>(new TransientLifetimeManager());
+            _container.RegisterType<IProductInfoViewModel, ProductInfoViewModel>();
 
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) => _container.Resolve(type));
 

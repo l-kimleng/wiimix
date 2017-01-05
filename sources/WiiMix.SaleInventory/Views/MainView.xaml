@@ -9,7 +9,8 @@
              xmlns:ctrlHelper="clr-namespace:WiiMix.SaleInventory.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" 
+             d:DesignWidth="550">
     <Grid Margin="0,0,0,0">
         <Grid.Resources>
             <ResourceDictionary>

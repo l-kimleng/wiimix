@@ -1,21 +1,23 @@
-﻿using WiiMix.SaleInventory.ViewModels;
-
-namespace WiiMix.SaleInventory.Views
+﻿namespace WiiMix.SaleInventory.Views
 {
     /// <summary>
     /// Interaction logic for ProductInfoView.xaml
     /// </summary>
     public partial class ProductInfoView : IProductInfoView
     {
-        public ProductInfoView(ProductInfoViewModel viewModel)
+        public ProductInfoView()
         {
             InitializeComponent();
-            DataContext = viewModel;
         }
 
-        public void Display()
+        public void ShowPopup()
         {
             ShowDialog();
+        }
+
+        public void ClosePopup()
+        {
+            Close();
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace WiiMix.SaleInventory
+﻿using Microsoft.Practices.Prism.Mvvm;
+
+namespace WiiMix.SaleInventory
 {
-    public interface IDialogService
+    public interface IDialogService : IView
     {
-        void Display();
+        void ShowPopup();
+        void ClosePopup();
     }
 }

@@ -124,6 +124,7 @@
     <Compile Include="Events\ProductEvent.cs" />
     <Compile Include="IDialogService.cs" />
     <Compile Include="IProductInfoView.cs" />
+    <Compile Include="IProductInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
