@@ -28,7 +28,7 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnUpdatedProdcut(Product updateProduct)
         {
-            Product = updateProduct;
+            Product = updateProduct.Clone();
             Title = "Update Product";
         }
 

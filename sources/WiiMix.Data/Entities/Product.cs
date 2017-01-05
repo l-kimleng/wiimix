@@ -36,12 +36,21 @@ namespace WiiMix.Data.Entities
 
         public Product Clone()
         {
-            var product = (Product)MemberwiseClone();
-            Id = product.Id;
-            Name = product.Name;
-            CategoryId = product.CategoryId;
-
-            return product;
+            var other = (Product)MemberwiseClone();
+            other.Id = Id;
+            other.Name = Name;
+            other.CategoryId = CategoryId;
+            other.BrandId = BrandId;
+            other.Category = new Category {Id = Category.Id, Name = Category.Name};
+            other.Brand = new Brand {Id = Brand.Id, Name = Brand.Name};
+            other.Config = new Config
+            {
+                ProductId = Config.ProductId,
+                Feature = Config.Feature,
+                Image = Config.Feature,
+                Price = Config.Price
+            };
+            return other;
         }
     }
 }
