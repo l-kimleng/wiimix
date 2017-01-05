@@ -29,8 +29,19 @@ namespace WiiMix.Data.Entities
             {
                 Feature = config.Feature,
                 Price = config.Price,
-                Image = Config.Image
+                Image = Config.Image,
+                ProductId = config.ProductId
             };
+        }
+
+        public Product Clone()
+        {
+            var product = (Product)MemberwiseClone();
+            Id = product.Id;
+            Name = product.Name;
+            CategoryId = product.CategoryId;
+
+            return product;
         }
     }
 }

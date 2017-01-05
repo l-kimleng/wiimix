@@ -9,6 +9,8 @@ namespace WiiMix.Data.Persistence
         // work with more than two dbContext in unit of work
         private readonly SaleInventoryContext _context;
         private IProductRepository _productRepository;
+        private ICategoryRepository _categoryRepository;
+        private IBrandRepository _brandRepository;
 
         public UnitOfWork(SaleInventoryContext context)
         {
@@ -16,6 +18,8 @@ namespace WiiMix.Data.Persistence
         }
 
         public IProductRepository ProductRepository => _productRepository ?? (_productRepository = new ProductRepository(_context));
+        public ICategoryRepository CategoryRepository => _categoryRepository ?? (_categoryRepository = new CategoryRepository(_context));
+        public IBrandRepository BrandRepository => _brandRepository ?? (_brandRepository = new BrandRepository(_context));
 
         public void Dispose()
         {
