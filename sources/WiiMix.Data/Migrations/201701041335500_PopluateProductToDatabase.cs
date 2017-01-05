@@ -2,7 +2,7 @@ namespace WiiMix.Data.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class PopulateProductToDatabase : DbMigration
+    public partial class PopluateProductToDatabase : DbMigration
     {
         public override void Up()
         {
@@ -73,7 +73,7 @@ namespace WiiMix.Data.Migrations
 
 
         }
-        
+
         public override void Down()
         {
             Sql("DELETE FROM Categories WHERE Id IN (1, 2, 3, 4, 5, 6, 7, 8, 9)");
