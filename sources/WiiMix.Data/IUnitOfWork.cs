@@ -8,6 +8,7 @@ namespace WiiMix.Data
         IProductRepository ProductRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IBrandRepository BrandRepository { get; }
+        IConfigRepository ConfigRepository { get; }
         int Completed();
     }
 }

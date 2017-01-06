@@ -11,6 +11,7 @@ namespace WiiMix.Data.Persistence
         private IProductRepository _productRepository;
         private ICategoryRepository _categoryRepository;
         private IBrandRepository _brandRepository;
+        private IConfigRepository _configRepository;
 
         public UnitOfWork(SaleInventoryContext context)
         {
@@ -20,6 +21,7 @@ namespace WiiMix.Data.Persistence
         public IProductRepository ProductRepository => _productRepository ?? (_productRepository = new ProductRepository(_context));
         public ICategoryRepository CategoryRepository => _categoryRepository ?? (_categoryRepository = new CategoryRepository(_context));
         public IBrandRepository BrandRepository => _brandRepository ?? (_brandRepository = new BrandRepository(_context));
+        public IConfigRepository ConfigRepository => _configRepository ?? (_configRepository = new ConfigRepository(_context));
 
         public void Dispose()
         {

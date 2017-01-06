@@ -26,7 +26,7 @@ namespace WiiMix.SaleInventory
 
         public void Initialize()
         {
-            _container.RegisterType<IUnitOfWork, UnitOfWork>();
+            _container.RegisterType<IUnitOfWork, UnitOfWork>(new TransientLifetimeManager());
             _container.RegisterType<IProductRepository, ProductRepository>();
             _container.RegisterType<ICategoryRepository, CategoryRepository>();
             _container.RegisterType<IBrandRepository, BrandRepository>();

@@ -75,6 +75,7 @@
     <Compile Include="Persistence\EntityConfigurations\StockConfiguration.cs" />
     <Compile Include="Persistence\Repositories\BrandRepository.cs" />
     <Compile Include="Persistence\Repositories\CategoryRepository.cs" />
+    <Compile Include="Persistence\Repositories\ConfigRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\SaleInventoryContext.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Entities\StockDetail.cs" />
     <Compile Include="Repositories\IBrandRepository.cs" />
     <Compile Include="Repositories\ICategoryRepository.cs" />
+    <Compile Include="Repositories\IConfigRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>

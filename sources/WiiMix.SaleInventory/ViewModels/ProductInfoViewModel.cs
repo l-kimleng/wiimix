@@ -16,24 +16,43 @@ namespace WiiMix.SaleInventory.ViewModels
     public class ProductInfoViewModel : BindableBase, IProductInfoViewModel
     {
         private readonly IUnityContainer _container;
-        private readonly IUnitOfWork _unitOfWork;
-        public ProductInfoViewModel(IUnityContainer container, IEventAggregator eventAggregator, IUnitOfWork unitOfWork)
+        public ProductInfoViewModel(IUnityContainer container, IEventAggregator eventAggregator)
         {
             _container = container;
-            _unitOfWork = unitOfWork;
             eventAggregator.GetEvent<ProductUpdatedEvent>().Subscribe(OnUpdatedProdcut);
 
-            Initialize();
             CancelCommand = new DelegateCommand(OnCancelProduct);
             SaveCommand = new DelegateCommand<Product>(OnSaveProduct);
         }
 
-        private void OnSaveProduct(Product savedProduct)
+        private void OnSaveProduct(Product product)
         {
-            using (var unitOfWork = _unitOfWork)
+            using (var unitOfWork = _container.Resolve<IUnitOfWork>())
             {
-                var productRepository = unitOfWork.ProductRepository;
-                productRepository.Add(savedProduct);
+                var savedProduct = unitOfWork.ProductRepository.Get(product.Id);
+                savedProduct.Name = product.Name;
+                savedProduct.CategoryId = product.Category.Id;
+                savedProduct.BrandId = product.Brand.Id;
+                if (product.Config.ProductId <= 0) // Add new config
+                {
+                    savedProduct.Config = new Config
+                    {
+                        ProductId = product.Id,
+                        Feature = product.Config.Feature,
+                        Price = product.Config.Price,
+                        Image = product.Config.Image
+                    };
+                }
+                else // user just need to update the existing config
+                {
+                    var updatedConfig = unitOfWork.ConfigRepository.Get(product.Id);
+                    updatedConfig.Feature = product.Config.Feature;
+                    updatedConfig.Price = product.Config.Price;
+                    updatedConfig.Image = product.Config.Image;
+                    unitOfWork.ConfigRepository.Update(updatedConfig);
+                }
+                
+                unitOfWork.ProductRepository.Update(savedProduct);
                 unitOfWork.Completed();
             }
         }
@@ -47,7 +66,7 @@ namespace WiiMix.SaleInventory.ViewModels
         {
             Title = "Update Product";
             Product = updateProduct;
-
+            Initialize();
             if (Product.Category == null)
             {
                 if (Categories.Count > 0) throw new ArgumentNullException("Product.Category", "User creates product without select category.");
@@ -71,7 +90,7 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void Initialize()
         {
-            using (var unitOfWork = _unitOfWork)
+            using (var unitOfWork = _container.Resolve<IUnitOfWork>())
             {
                 if (Categories == null)
                     Categories = unitOfWork.CategoryRepository.GetAll().ToList();

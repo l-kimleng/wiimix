@@ -57,5 +57,10 @@ namespace WiiMix.Data.Persistence.Repositories
         {
             _entities.RemoveRange(entities);
         }
+
+        public void Update(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
     }
 }
