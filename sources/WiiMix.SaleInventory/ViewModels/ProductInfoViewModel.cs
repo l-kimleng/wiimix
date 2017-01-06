@@ -30,7 +30,12 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnSaveProduct(Product savedProduct)
         {
-            
+            using (var unitOfWork = _unitOfWork)
+            {
+                var productRepository = unitOfWork.ProductRepository;
+                productRepository.Add(savedProduct);
+                unitOfWork.Completed();
+            }
         }
 
         private void OnCancelProduct()
