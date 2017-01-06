@@ -24,8 +24,9 @@ namespace WiiMix.SaleInventory.ViewModels
             UpdateCommand = new DelegateCommand<Product>(OnClickUpdatedCommand);
         }
 
-        private void OnClickUpdatedCommand(Product product)
+        private void OnClickUpdatedCommand(Product selectedProduct)
         {
+            var product = selectedProduct.Clone();
             _eventAggregator.GetEvent<ProductUpdatedEvent>().Publish(product);
             ProductInfoViewModel.ShowDialog();
         }

@@ -8,5 +8,16 @@
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+
+        public Config Clone()
+        {
+            return new Config
+            {
+                ProductId = ProductId,
+                Feature = Feature,
+                Price = Price,
+                Image = Image
+            };
+        }
     }
 }

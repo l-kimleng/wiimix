@@ -8,5 +8,14 @@ namespace WiiMix.Data.Entities
         public string Name { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+
+        public Brand Clone()
+        {
+            return new Brand
+            {
+                Id = Id,
+                Name = Name
+            };
+        }
     }
 }

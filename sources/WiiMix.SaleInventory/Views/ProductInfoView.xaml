@@ -87,12 +87,12 @@
                                 <TextBlock Text="Category" Margin="0,5"/>
                             <ComboBox Margin="0,5" 
                                       ItemsSource="{Binding Categories}"
-                                      SelectedItem="{Binding SelectedCategory, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding Product.Category, UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="Name"/>
                                 <TextBlock Text="Brand"  Margin="0,5"/>
                             <ComboBox Margin="0,5"
                                       ItemsSource="{Binding Brands}" 
-                                      SelectedItem="{Binding SelectedBrand, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding Product.Brand, UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="Name"/>
                             </StackPanel>
                     </TabItem>
@@ -126,7 +126,9 @@
                 </controls:MetroTabControl>
                 <Button Margin="20,0,0,0" Grid.Row="1"
                         Grid.Column="1"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Left"
+                        Command="{Binding SaveCommand}"
+                        CommandParameter="{Binding Product}">
                     <Border BorderThickness="1" 
                             BorderBrush="{DynamicResource ControlBorderBrush}"
                             Padding="10,5">
