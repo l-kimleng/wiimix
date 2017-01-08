@@ -25,22 +25,13 @@ namespace WiiMix.Data.Entities
                 return;
             }
 
-            Config = config.Clone();
-        }
-
-        public Product Clone()
-        {
-            var product = new Product()
+            Config = new Config
             {
-                Id = Id,
-                Name = Name,
-                CategoryId = CategoryId,
-                BrandId = BrandId,
-                Category = Category.Clone(),
-                Brand = Brand.Clone(),
-                Config = Config.Clone()
+                Feature = config.Feature,
+                Price = config.Price,
+                Image = Config.Image,
+                ProductId = config.ProductId
             };
-            return product;
         }
     }
 }
