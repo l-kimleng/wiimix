@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 
-namespace WiiMix.Data.Entities
+namespace WiiMix.SaleInventory.Models
 {
     public class Config : BindableBase
     {

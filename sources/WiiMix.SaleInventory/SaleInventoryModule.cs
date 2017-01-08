@@ -1,9 +1,11 @@
-﻿using Microsoft.Practices.Unity;
+﻿using AutoMapper;
+using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
 using WiiMix.Data;
+using WiiMix.Data.Entities;
 using WiiMix.Data.Persistence;
 using WiiMix.Data.Persistence.Repositories;
 using WiiMix.Data.Repositories;
@@ -31,12 +33,13 @@ namespace WiiMix.SaleInventory
             _container.RegisterType<ICategoryRepository, CategoryRepository>();
             _container.RegisterType<IBrandRepository, BrandRepository>();
 
-
             _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterType<object,ProductView>("Inventory/ProductView");
             _container.RegisterType<object,StockView>("Inventory/StockView");
             _container.RegisterType<IProductInfoView, ProductInfoView>(new TransientLifetimeManager());
             _container.RegisterType<IProductInfoViewModel, ProductInfoViewModel>();
+
+            InitializeMapper();
 
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) => _container.Resolve(type));
 
@@ -50,6 +53,14 @@ namespace WiiMix.SaleInventory
             _regionManager.RegisterViewWithRegion(RegionConstantCollection.InventoryRegion, typeof(StockView));
             
             _regionManager.RequestNavigate(RegionConstantCollection.CoreRegion, typeof(MainView).FullName);
+        }
+
+        private void InitializeMapper()
+        {
+            Mapper.Initialize(x => x.CreateMap<Category, Models.Category>().ForMember(c => c.Products, opt => opt.Ignore()));
+            Mapper.Initialize(x => x.CreateMap<Brand, Models.Brand>().ForMember(b => b.Products, opt => opt.Ignore()));
+            Mapper.Initialize(x => x.CreateMap<Config, Models.Config>().ForMember(c => c.Product, opt => opt.Ignore()));
+            Mapper.Initialize(x => x.CreateMap<Product, Models.Product>().ForMember(p => p.Details, opt => opt.Ignore()));
         }
     }
 }

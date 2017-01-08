@@ -6,5 +6,7 @@ namespace WiiMix.Data.Repositories
     public interface IProductRepository : IRepository<Product>
     {
         IEnumerable<Product> Display();
+        Product FindUpdate(int productId);
+
     }
 }

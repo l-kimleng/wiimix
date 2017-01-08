@@ -127,7 +127,7 @@
                 <Button Margin="20,0,0,0" Grid.Row="1"
                         Grid.Column="1"
                         HorizontalAlignment="Left"
-                        Command="{Binding SaveCommand}"
+                        Command="{Binding UpdateCommand}"
                         CommandParameter="{Binding Product}">
                     <Border BorderThickness="1" 
                             BorderBrush="{DynamicResource ControlBorderBrush}"

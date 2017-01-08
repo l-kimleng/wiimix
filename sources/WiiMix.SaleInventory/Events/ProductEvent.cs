@@ -1,9 +1,19 @@
 ﻿using Prism.Events;
-using WiiMix.Data.Entities;
+using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.Events
 {
-    public class ProductUpdatedEvent : PubSubEvent<Product>
+    public class ProductLoadedEvent : PubSubEvent<Product>
     {
+    }
+
+    public class ProductUpdateCompletedEvent : PubSubEvent<Product>
+    {
+        
+    }
+
+    public class ProductAddCompletedEvent : PubSubEvent<Product>
+    {
+        
     }
 }

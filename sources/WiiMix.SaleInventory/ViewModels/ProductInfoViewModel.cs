@@ -7,53 +7,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using WiiMix.Data;
-using WiiMix.Data.Entities;
 using WiiMix.SaleInventory.Events;
-using DelegateCommand = Prism.Commands.DelegateCommand;
+using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
     public class ProductInfoViewModel : BindableBase, IProductInfoViewModel
     {
         private readonly IUnityContainer _container;
+        private readonly IEventAggregator _eventAggregator;
+
         public ProductInfoViewModel(IUnityContainer container, IEventAggregator eventAggregator)
         {
             _container = container;
-            eventAggregator.GetEvent<ProductUpdatedEvent>().Subscribe(OnUpdatedProdcut);
+            _eventAggregator = eventAggregator;
+            eventAggregator.GetEvent<ProductLoadedEvent>().Subscribe(OnLoadedProdcut);
 
             CancelCommand = new DelegateCommand(OnCancelProduct);
-            SaveCommand = new DelegateCommand<Product>(OnSaveProduct);
+            UpdateCommand = new DelegateCommand<Product>(OnUpdateProduct);
+            AddNewCommand = new DelegateCommand(OnAddNewProduct);
         }
 
-        private void OnSaveProduct(Product product)
+        private void OnAddNewProduct()
+        {
+        }
+
+        private void OnUpdateProduct(Product product)
         {
             using (var unitOfWork = _container.Resolve<IUnitOfWork>())
             {
-                var savedProduct = unitOfWork.ProductRepository.Get(product.Id);
+                var savedProduct = unitOfWork.ProductRepository.FindUpdate(product.Id);
                 savedProduct.Name = product.Name;
                 savedProduct.CategoryId = product.Category.Id;
                 savedProduct.BrandId = product.Brand.Id;
-                if (product.Config.ProductId <= 0) // Add new config
-                {
-                    savedProduct.Config = new Config
-                    {
-                        ProductId = product.Id,
-                        Feature = product.Config.Feature,
-                        Price = product.Config.Price,
-                        Image = product.Config.Image
-                    };
-                }
-                else // user just need to update the existing config
-                {
-                    var updatedConfig = unitOfWork.ConfigRepository.Get(product.Id);
-                    updatedConfig.Feature = product.Config.Feature;
-                    updatedConfig.Price = product.Config.Price;
-                    updatedConfig.Image = product.Config.Image;
-                    unitOfWork.ConfigRepository.Update(updatedConfig);
-                }
-                
+
+                savedProduct.Config.Feature = product.Config.Feature;
+                savedProduct.Config.Price = product.Config.Price;
+                savedProduct.Config.Image = product.Config.Image;
+                savedProduct.Config.ProductId = product.Id;
+
                 unitOfWork.ProductRepository.Update(savedProduct);
-                unitOfWork.Completed();
+                var result = unitOfWork.Completed();
+                if (result > 0)
+                {
+                    //var payload = Mapper.Map<Product>(savedProduct);
+                    //var payload = new Product
+                    //{
+                    //    Id = savedProduct.Id,
+                    //    Name = savedProduct.Name,
+                    //    CategoryId = savedProduct.CategoryId,
+                    //    BrandId = savedProduct.BrandId,
+                    //    Category = new Category
+                    //    {
+                    //        Id = savedProduct.CategoryId,
+                    //        Name = savedProduct.Category.Name
+                    //    },
+                    //    Brand = new Brand
+                    //    {
+                    //        Id = savedProduct.BrandId,
+                    //        Name = savedProduct.Brand.Name
+                    //    },
+                    //    Config = new Config
+                    //    {
+                    //        ProductId = savedProduct.Id,
+                    //        Feature = savedProduct.Config.Feature,
+                    //        Price = savedProduct.Config.Price,
+                    //        Image = savedProduct.Config.Image
+                    //    }
+                    //};
+                    _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Publish(product);
+                }
             }
         }
 
@@ -62,30 +85,42 @@ namespace WiiMix.SaleInventory.ViewModels
             CloseDialog();
         }
 
-        private void OnUpdatedProdcut(Product updateProduct)
+        private void OnLoadedProdcut(Product updateProduct)
         {
-            Title = "Update Product";
+            Title = updateProduct == null ? "Create Product" : "Update Product";
             Product = updateProduct;
             Initialize();
-            if (Product.Category == null)
+            if (Product != null)
             {
-                if (Categories.Count > 0) throw new ArgumentNullException("Product.Category", "User creates product without select category.");
-            }
-            else
-            {
-                if (Categories.Count <= 0) throw new ArgumentOutOfRangeException("Product.Category", "There is no category in database.");
-            }
+                if (Product.Category == null)
+                {
+                    if (Categories.Count > 0) throw new ArgumentNullException("Product.Category", "User creates product without select category.");
+                }
+                else
+                {
+                    if (Categories.Count <= 0) throw new ArgumentOutOfRangeException("Product.Category", "There is no category in database.");
+                }
 
-            if (Product.Brand == null)
-            {
-                if (Brands.Count > 0) throw new ArgumentNullException("Product.Brand", "User creates product without select brand.");
+                if (Product.Brand == null)
+                {
+                    if (Brands.Count > 0) throw new ArgumentNullException("Product.Brand", "User creates product without select brand.");
+                }
+                else
+                {
+                    if (Brands.Count <= 0) throw new ArgumentOutOfRangeException("Product.Brand", "There is no brand in database.");
+                }
+                Product.Category = Categories.FirstOrDefault(c => c.Id == Product.CategoryId);
+                Product.Brand = Brands.FirstOrDefault(b => b.Id == Product.BrandId);
             }
             else
             {
-                if (Brands.Count <= 0) throw new ArgumentOutOfRangeException("Product.Brand", "There is no brand in database.");
+                Product = new Product
+                {
+                    Category = Categories.Take(1).FirstOrDefault(),
+                    Brand = Brands.Take(1).FirstOrDefault()
+                };
             }
-            Product.Category = Categories.FirstOrDefault(c => c.Id == Product.CategoryId);
-            Product.Brand = Brands.FirstOrDefault(b => b.Id == Product.BrandId);
+            ShowDialog();
         }
 
         private void Initialize()
@@ -93,9 +128,31 @@ namespace WiiMix.SaleInventory.ViewModels
             using (var unitOfWork = _container.Resolve<IUnitOfWork>())
             {
                 if (Categories == null)
-                    Categories = unitOfWork.CategoryRepository.GetAll().ToList();
+                {
+                    Categories = new List<Category>();
+                    foreach (var category in unitOfWork.CategoryRepository.GetAll())
+                    {
+                        //Categories.Add(Mapper.Map<Category>(category));
+                        Categories.Add(new Category
+                        {
+                            Id = category.Id,
+                            Name = category.Name
+                        });
+                    }
+                }
                 if (Brands == null)
-                    Brands = unitOfWork.BrandRepository.GetAll().ToList();
+                {
+                    Brands = new List<Brand>();
+                    foreach (var brand in unitOfWork.BrandRepository.GetAll())
+                    {
+                        //Brands.Add(Mapper.Map<Brand>(brand));
+                        Brands.Add(new Brand
+                        {
+                            Id   = brand.Id,
+                            Name = brand.Name
+                        });
+                    }
+                }
             }
         }
 
@@ -128,7 +185,8 @@ namespace WiiMix.SaleInventory.ViewModels
         }
        
         public ICommand CancelCommand { get; private set; }
-        public ICommand SaveCommand { get; private set; }
+        public ICommand UpdateCommand { get; private set; }
+        public ICommand AddNewCommand { get; private set; }
 
         private IProductInfoView _productInfoView;
 

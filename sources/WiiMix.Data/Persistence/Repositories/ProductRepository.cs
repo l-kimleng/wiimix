@@ -27,5 +27,16 @@ namespace WiiMix.Data.Persistence.Repositories
             }
             return productList;
         }
+
+        public Product FindUpdate(int productId)
+        {
+            var product = _context.Products.SingleOrDefault(p => p.Id == productId);
+            if (product != null)
+            {
+                var config = _context.Configs.SingleOrDefault(c => c.ProductId == productId);
+                product.Update(config);
+            }
+            return product;
+        }
     }
 }

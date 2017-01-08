@@ -1,13 +1,13 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using WiiMix.Data;
-using WiiMix.Data.Entities;
 using WiiMix.SaleInventory.Events;
+using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
@@ -22,13 +22,34 @@ namespace WiiMix.SaleInventory.ViewModels
             _unitOfWork = unitOfWork;
             GetAll();
             UpdateCommand = new DelegateCommand<Product>(OnClickUpdatedCommand);
+            AddNewCommand = new DelegateCommand(OnAddNewProductCommand);
+        }
+
+        private void OnAddNewProductCommand()
+        {
+            _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(null);
         }
 
         private void OnClickUpdatedCommand(Product selectedProduct)
         {
             var product = selectedProduct.Clone();
-            _eventAggregator.GetEvent<ProductUpdatedEvent>().Publish(product);
-            ProductInfoViewModel.ShowDialog();
+            _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Subscribe(OnUpdateProductCompleted);
+            _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(product);
+        }
+
+        private void OnUpdateProductCompleted(Product product)
+        {
+            SelectedProduct.Name = product.Name;
+            SelectedProduct.BrandId = product.BrandId;
+            SelectedProduct.CategoryId = product.CategoryId;
+            SelectedProduct.Category.Id = product.CategoryId;
+            SelectedProduct.Category.Name = product.Category.Name;
+            SelectedProduct.Brand.Id = product.BrandId;
+            SelectedProduct.Brand.Name = product.Brand.Name;
+            SelectedProduct.Config.ProductId = product.Config.ProductId;
+            SelectedProduct.Config.Feature = product.Config.Feature;
+            SelectedProduct.Config.Image = product.Config.Image;
+            SelectedProduct.Config.Price = product.Config.Price;
         }
 
         [Microsoft.Practices.Unity.Dependency]
@@ -39,17 +60,53 @@ namespace WiiMix.SaleInventory.ViewModels
             using (var unitOfwork = _unitOfWork)
             {
                 var productRepository = unitOfwork.ProductRepository;
-                var products = productRepository.Display().ToList();
-                Products = CollectionViewSource.GetDefaultView(products);
-                if (products.Count > 0)
+                Products = new ObservableCollection<Product>();
+                //Products.AddRange(Mapper.Map<IEnumerable<Product>>(productRepository.Display()));
+                foreach (var product in productRepository.Display())
                 {
-                    SelectedProduct = products[0];
+                    Products.Add(new Product
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        CategoryId = product.CategoryId,
+                        BrandId = product.BrandId,
+                        Category = new Category
+                        {
+                            Id = product.Category.Id,
+                            Name = product.Category.Name
+                        },
+                        Brand = new Brand
+                        {
+                            Id = product.Brand.Id,
+                            Name = product.Brand.Name
+                        },
+                        Config = new Config
+                        {
+                            ProductId = product.Config.ProductId,
+                            Feature = product.Config.Feature,
+                            Price = product.Config.Price,
+                            Image = product.Config.Image
+                        }
+                    });
+                    //Products.Add(Mapper.Map<Product>(product));
+                }
+                ProductCollectionView = CollectionViewSource.GetDefaultView(Products);
+                if (Products.Count > 0)
+                {
+                    SelectedProduct = Products[0];
                 }
             }
         }
 
-        private ICollectionView _products;
-        public ICollectionView Products
+        private ICollectionView _productCollectionView;
+        public ICollectionView ProductCollectionView
+        {
+            get { return _productCollectionView; }
+            set { SetProperty(ref _productCollectionView, value); }
+        }
+
+        private ObservableCollection<Product> _products;
+        public ObservableCollection<Product> Products
         {
             get { return _products; }
             set { SetProperty(ref _products, value); }
@@ -63,5 +120,6 @@ namespace WiiMix.SaleInventory.ViewModels
         }
 
         public ICommand UpdateCommand { get; private set; }
+        public ICommand AddNewCommand { get; private set; }
     }
 }

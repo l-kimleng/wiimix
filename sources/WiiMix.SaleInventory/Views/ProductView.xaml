@@ -39,7 +39,7 @@
                         </ResourceDictionary>
                            
                         </StackPanel.Resources>
-                        <Button Content="{iconPacks:PackIconModern Kind=Add}" Margin="0, 0, 10, 0" Foreground="Blue"/>
+                        <Button Content="{iconPacks:PackIconModern Kind=Add}" Command="{Binding AddNewCommand}" Margin="0, 0, 10, 0" Foreground="Blue"/>
                         <Button Content="{iconPacks:PackIconModern Kind=Edit}" Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedProduct}" Margin="0, 0, 10, 0" Foreground="Green"/>
                         <Button Content="{iconPacks:PackIconModern Kind=Delete}" Margin="0, 0, 10, 0" Foreground="Red"/>
                         <Button Content="{iconPacks:PackIconModern Kind=OfficeExcel}" Margin="0, 0, 0, 0" Foreground="Orange"/>
@@ -52,9 +52,9 @@
 
         <Border Grid.Row="1" Padding="10, 10, 10, 0">
             <DataGrid AutoGenerateColumns="False"
-                      ItemsSource="{Binding Products}"
-                      Style="{DynamicResource AzureDataGrid}"
+                      ItemsSource="{Binding ProductCollectionView, Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{DynamicResource AzureDataGrid}"
                       RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
