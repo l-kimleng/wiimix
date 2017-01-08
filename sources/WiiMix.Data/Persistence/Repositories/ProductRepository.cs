@@ -14,7 +14,7 @@ namespace WiiMix.Data.Persistence.Repositories
             _context = context as SaleInventoryContext;
         }
 
-        public IEnumerable<Product> Display()
+        public IEnumerable<Product> Find()
         {
             var products = _context.Products.Include(c => c.Category).Include(b => b.Brand);
             var configs = _context.Configs.ToList();

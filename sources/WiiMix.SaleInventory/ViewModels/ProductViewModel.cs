@@ -61,8 +61,8 @@ namespace WiiMix.SaleInventory.ViewModels
             {
                 var productRepository = unitOfwork.ProductRepository;
                 Products = new ObservableCollection<Product>();
-                //Products.AddRange(Mapper.Map<IEnumerable<Product>>(productRepository.Display()));
-                foreach (var product in productRepository.Display())
+                //Products.AddRange(Mapper.Map<IEnumerable<Product>>(productRepository.Find()));
+                foreach (var product in productRepository.Find())
                 {
                     Products.Add(new Product
                     {
