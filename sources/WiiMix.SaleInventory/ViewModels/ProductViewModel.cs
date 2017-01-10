@@ -25,31 +25,40 @@ namespace WiiMix.SaleInventory.ViewModels
             AddNewCommand = new DelegateCommand(OnAddNewProductCommand);
         }
 
+        private bool isUpdated = true;
         private void OnAddNewProductCommand()
         {
+            isUpdated = false;
             _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(null);
         }
 
         private void OnClickUpdatedCommand(Product selectedProduct)
         {
             var product = selectedProduct.Clone();
-            _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Subscribe(OnUpdateProductCompleted);
+            _eventAggregator.GetEvent<ProductSaveCompletedEvent>().Subscribe(OnSaveProductCompleted);
             _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(product);
         }
 
-        private void OnUpdateProductCompleted(Product product)
+        private void OnSaveProductCompleted(Product product)
         {
-            SelectedProduct.Name = product.Name;
-            SelectedProduct.BrandId = product.BrandId;
-            SelectedProduct.CategoryId = product.CategoryId;
-            SelectedProduct.Category.Id = product.CategoryId;
-            SelectedProduct.Category.Name = product.Category.Name;
-            SelectedProduct.Brand.Id = product.BrandId;
-            SelectedProduct.Brand.Name = product.Brand.Name;
-            SelectedProduct.Config.ProductId = product.Config.ProductId;
-            SelectedProduct.Config.Feature = product.Config.Feature;
-            SelectedProduct.Config.Image = product.Config.Image;
-            SelectedProduct.Config.Price = product.Config.Price;
+            if (isUpdated)
+            {
+                SelectedProduct.Name = product.Name;
+                SelectedProduct.BrandId = product.BrandId;
+                SelectedProduct.CategoryId = product.CategoryId;
+                SelectedProduct.Category.Id = product.CategoryId;
+                SelectedProduct.Category.Name = product.Category.Name;
+                SelectedProduct.Brand.Id = product.BrandId;
+                SelectedProduct.Brand.Name = product.Brand.Name;
+                SelectedProduct.Config.ProductId = product.Config.ProductId;
+                SelectedProduct.Config.Feature = product.Config.Feature;
+                SelectedProduct.Config.Image = product.Config.Image;
+                SelectedProduct.Config.Price = product.Config.Price;
+            }
+            else
+            {
+                Products.Add(product);
+            }
         }
 
         [Microsoft.Practices.Unity.Dependency]

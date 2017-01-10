@@ -26,7 +26,12 @@ namespace WiiMix.SaleInventory.Models
             set { SetProperty(ref _categoryId, value); }
         }
 
-        public virtual Category Category { get; set; }
+        private Category _category;
+        public Category Category
+        {
+            get{return _category;}
+            set { SetProperty(ref _category, value); }
+        }
 
         private int _bandId;
         public int BrandId
@@ -35,11 +40,21 @@ namespace WiiMix.SaleInventory.Models
             set { SetProperty(ref _bandId, value); }
         }
 
-        public virtual Brand Brand { get; set; }
+        private Brand _brand;
+        public Brand Brand
+        {
+            get { return _brand; }
+            set { SetProperty(ref _brand, value); }
+        }
 
-        public virtual Config Config { get; set; }
+        private Config _config;
+        public Config Config
+        {
+            get { return _config; }
+            set { SetProperty(ref _config, value); }
+        }
 
-        public virtual ICollection<StockDetail> Details { get; set; }
+        public ICollection<StockDetail> Details { get; set; }
 
         public void Update(Config config)
         {
