@@ -23,25 +23,27 @@ namespace WiiMix.SaleInventory.ViewModels
             GetAll();
             UpdateCommand = new DelegateCommand<Product>(OnClickUpdatedCommand);
             AddNewCommand = new DelegateCommand(OnAddNewProductCommand);
+            eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Subscribe(OnSaveProductCompleted);
+            eventAggregator.GetEvent<ProductCreateCompletedEvent>().Subscribe(OnSaveProductCompleted);
         }
 
-        private bool isUpdated = true;
+        private bool _isUpdated = true;
         private void OnAddNewProductCommand()
         {
-            isUpdated = false;
+            _isUpdated = false;
             _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(null);
         }
 
         private void OnClickUpdatedCommand(Product selectedProduct)
         {
             var product = selectedProduct.Clone();
-            _eventAggregator.GetEvent<ProductSaveCompletedEvent>().Subscribe(OnSaveProductCompleted);
+            _isUpdated = true;
             _eventAggregator.GetEvent<ProductLoadedEvent>().Publish(product);
         }
 
         private void OnSaveProductCompleted(Product product)
         {
-            if (isUpdated)
+            if (_isUpdated)
             {
                 SelectedProduct.Name = product.Name;
                 SelectedProduct.BrandId = product.BrandId;

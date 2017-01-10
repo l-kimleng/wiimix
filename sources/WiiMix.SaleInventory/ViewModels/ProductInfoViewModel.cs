@@ -7,11 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using WiiMix.Data;
-using WiiMix.Data.Entities;
+//using WiiMix.Data.Entities;
 using WiiMix.SaleInventory.Events;
-using Brand = WiiMix.SaleInventory.Models.Brand;
-using Category = WiiMix.SaleInventory.Models.Category;
-using Product = WiiMix.SaleInventory.Models.Product;
+using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
@@ -35,7 +33,7 @@ namespace WiiMix.SaleInventory.ViewModels
             var isUpdated = product.Id > 0;
             using (var unitOfWork = _container.Resolve<IUnitOfWork>())
             {
-                var savedProduct = isUpdated ? unitOfWork.ProductRepository.FindUpdate(product.Id) : new Data.Entities.Product { Config = new Config() };
+                var savedProduct = isUpdated ? unitOfWork.ProductRepository.FindUpdate(product.Id) : new Data.Entities.Product {Config = new Data.Entities.Config()};
                 savedProduct.Name = product.Name;
                 savedProduct.CategoryId = product.Category.Id;
                 savedProduct.BrandId = product.Brand.Id;
@@ -43,20 +41,34 @@ namespace WiiMix.SaleInventory.ViewModels
                 savedProduct.Config.Feature = product.Config.Feature;
                 savedProduct.Config.Price = product.Config.Price;
                 savedProduct.Config.Image = product.Config.Image;
+                var newProductId = 0;
+                var result = 0;
                 if (isUpdated)
                 {
                     savedProduct.Config.ProductId = product.Id;
                     unitOfWork.ProductRepository.Update(savedProduct);
+                    result = unitOfWork.Completed();
                 }
                 else
                 {
                     var p = unitOfWork.ProductRepository.Add(savedProduct);
-                    product.Id = p.Id;
+                    result = unitOfWork.Completed();
+                    newProductId = p.Id;
                 }
-                var result = unitOfWork.Completed();
                 if (result > 0)
                 {
-                    _eventAggregator.GetEvent<ProductSaveCompletedEvent>().Publish(product);
+                    if (newProductId > 0)
+                    {
+                        product.Id = newProductId;
+                        product.CategoryId = product.Category.Id;
+                        product.BrandId = product.Brand.Id;
+                        product.Config.ProductId = newProductId;
+                        _eventAggregator.GetEvent<ProductCreateCompletedEvent>().Publish(product);
+                    }
+                    else
+                    {
+                        _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Publish(product);
+                    }
                 }
             }
         }
@@ -69,11 +81,6 @@ namespace WiiMix.SaleInventory.ViewModels
         private void OnLoadedProdcut(Product product)
         {
             Title = product == null ? "Create Product" : "Update Product";
-            if (product == null)
-            {
-                Product = new Product {Config = new Models.Config()};
-
-            }
             Product = product;
             Initialize();
             if (Product != null)
@@ -103,7 +110,8 @@ namespace WiiMix.SaleInventory.ViewModels
                 Product = new Product
                 {
                     Category = Categories.Take(1).FirstOrDefault(),
-                    Brand = Brands.Take(1).FirstOrDefault()
+                    Brand = Brands.Take(1).FirstOrDefault(),
+                    Config = new Config()
                 };
             }
             ShowDialog();

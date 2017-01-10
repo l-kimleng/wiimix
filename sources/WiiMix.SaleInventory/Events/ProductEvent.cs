@@ -7,7 +7,12 @@ namespace WiiMix.SaleInventory.Events
     {
     }
 
-    public class ProductSaveCompletedEvent : PubSubEvent<Product>
+    public class ProductUpdateCompletedEvent : PubSubEvent<Product>
+    {
+        
+    }
+
+    public class ProductCreateCompletedEvent : PubSubEvent<Product>
     {
         
     }
