@@ -26,6 +26,7 @@
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Style="{StaticResource HamburgerMenu}"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
+                                SelectedIndex="0"
                                 prism:RegionManager.RegionName="{x:Static utils:RegionConstantCollection.InventoryRegion}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ItemClick">

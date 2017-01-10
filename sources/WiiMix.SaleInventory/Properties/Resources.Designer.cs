@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace WiiMix.SaleInventory.Properties {
+    using System;
     
     
     /// <summary>
@@ -37,7 +38,7 @@ namespace WiiMix.SaleInventory.Properties {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if ((resourceMan == null)) {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WiiMix.SaleInventory.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
@@ -56,6 +57,24 @@ namespace WiiMix.SaleInventory.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Users\Kimleng\Source\Repos\Sale Inventory System\outputs.
+        /// </summary>
+        internal static string OutputFolder {
+            get {
+                return ResourceManager.GetString("OutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Users\Kimleng\Source\Repos\Sale Inventory System\templates\ProductTemplate.xlsx.
+        /// </summary>
+        internal static string ProductTemplate {
+            get {
+                return ResourceManager.GetString("ProductTemplate", resourceCulture);
             }
         }
     }

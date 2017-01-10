@@ -22,7 +22,7 @@ namespace WiiMix.SaleInventory.ViewModels
             if (hamburgerMenu == null) return;
             var selectedItem = hamburgerMenu.SelectedItem;
             var menu = selectedItem as HamburgerMenuItem;
-            _regionManager.RequestNavigate(Utils.RegionConstantCollection.InventoryRegion, menu?.Tag.ToString() ?? "");
+            _regionManager.RequestNavigate(RegionConstantCollection.InventoryRegion, menu?.Tag.ToString() ?? "");
         }
 
         public string Title => ModuleConstantCollection.InventoryHeaderTitle;

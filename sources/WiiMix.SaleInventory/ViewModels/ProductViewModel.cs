@@ -1,8 +1,12 @@
-﻿using Prism.Commands;
+﻿using OfficeOpenXml;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using WiiMix.Data;
@@ -23,8 +27,39 @@ namespace WiiMix.SaleInventory.ViewModels
             GetAll();
             UpdateCommand = new DelegateCommand<Product>(OnClickUpdatedCommand);
             AddNewCommand = new DelegateCommand(OnAddNewProductCommand);
+            ExportCommand = new DelegateCommand<IEnumerable<Product>>(OnExportProductsCommand);
             eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Subscribe(OnSaveProductCompleted);
             eventAggregator.GetEvent<ProductCreateCompletedEvent>().Subscribe(OnSaveProductCompleted);
+        }
+
+        private void OnExportProductsCommand(IEnumerable<Product> products)
+        {
+            var productList = products.ToList();
+            if (productList.Any())
+            {
+                var templatePath = Properties.Resources.ProductTemplate;
+                var outputFolder = Properties.Resources.OutputFolder;
+                var outputFile = outputFolder + @"\_product_list.xlsx";
+                var newFile = new FileInfo(outputFile);
+                var template = new FileInfo(templatePath);
+                using (var xlPackage = new ExcelPackage(newFile, template))
+                {
+                    var worksheet = xlPackage.Workbook.Worksheets["Product List"];
+                    var row = 2;
+                    foreach (var product in productList)
+                    {
+                        worksheet.Cells[row, 1].Value = product.Id;
+                        worksheet.Cells[row, 2].Value = product.Name;
+                        worksheet.Cells[row, 3].Value = product.Config.Image;
+                        worksheet.Cells[row, 4].Value = product.Category.Name;
+                        worksheet.Cells[row, 5].Value = product.Brand.Name;
+                        worksheet.Cells[row, 6].Value = product.Config.Feature;
+                        worksheet.Cells[row, 7].Value = product.Config.Price;
+                        row++;
+                    }
+                    xlPackage.Save();
+                }
+            }
         }
 
         private bool _isUpdated = true;
@@ -132,5 +167,6 @@ namespace WiiMix.SaleInventory.ViewModels
 
         public ICommand UpdateCommand { get; private set; }
         public ICommand AddNewCommand { get; private set; }
+        public ICommand ExportCommand { get; private set; }
     }
 }
