@@ -5,4 +5,5 @@
     <SolidColorBrush x:Key="HamburgerBackground" Color="#81F4F2F2"/>
     <SolidColorBrush x:Key="HeaderMouseHoverBackground" Color="#3FFFFFFF"/>
     <SolidColorBrush x:Key="HeaderContentDividerBorderBrush" Color="{DynamicResource Gray2}"/>
+    <SolidColorBrush x:Key="PageBackgroundColor" Color="#32C7C5C5"/>
 </ResourceDictionary>

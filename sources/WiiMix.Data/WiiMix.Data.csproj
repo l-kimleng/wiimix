@@ -58,10 +58,6 @@
     <Compile Include="Migrations\201701021406219_InitialModel.Designer.cs">
       <DependentUpon>201701021406219_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701041334357_InitialModel1.cs" />
-    <Compile Include="Migrations\201701041334357_InitialModel1.Designer.cs">
-      <DependentUpon>201701041334357_InitialModel1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201701041335500_PopluateProductToDatabase.cs" />
     <Compile Include="Migrations\201701041335500_PopluateProductToDatabase.Designer.cs">
       <DependentUpon>201701041335500_PopluateProductToDatabase.cs</DependentUpon>
@@ -96,9 +92,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701021406219_InitialModel.resx">
       <DependentUpon>201701021406219_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701041334357_InitialModel1.resx">
-      <DependentUpon>201701041334357_InitialModel1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701041335500_PopluateProductToDatabase.resx">
       <DependentUpon>201701041335500_PopluateProductToDatabase.cs</DependentUpon>

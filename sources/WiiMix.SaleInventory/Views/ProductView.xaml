@@ -12,43 +12,52 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance viewModels:ProductViewModel}">
     <UserControl.Resources>
-        <Style x:Key="PageStyle"
-               TargetType="{x:Type Grid}">
-            <Setter Property="Background" Value="#98C7C5C5"/>
-        </Style>
+        <ResourceDictionary Source="../Styles/Controls.View.xaml"/>
     </UserControl.Resources>
     <Grid Style="{StaticResource PageStyle}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <Border Grid.Row="0" Padding="10">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal"
-                                DockPanel.Dock="Right">
-                        <StackPanel.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.MergedDictionaries>
-                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml"/>
-                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml"/>
-                                </ResourceDictionary.MergedDictionaries>
-                            <Style TargetType="{x:Type Button}"
-                                   BasedOn="{StaticResource ChromelessButtonStyle}">
-                            </Style>
-                        </ResourceDictionary>
-                           
-                        </StackPanel.Resources>
-                        <Button Content="{iconPacks:PackIconModern Kind=Add}" Command="{Binding AddNewCommand}" Margin="0, 0, 10, 0" Foreground="Blue"/>
-                        <Button Content="{iconPacks:PackIconModern Kind=Edit}" Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedProduct}" Margin="0, 0, 10, 0" Foreground="Green"/>
-                        <Button Content="{iconPacks:PackIconModern Kind=Delete}" Margin="0, 0, 10, 0" Foreground="Red"/>
-                        <Button Content="{iconPacks:PackIconModern Kind=OfficeExcel}" Command="{Binding ExportCommand}" CommandParameter="{Binding Products}" Margin="0, 0, 0, 0" Foreground="Orange"/>
-                    </StackPanel>
-                    <TextBox Style="{DynamicResource SearchMetroTextBox}"
-                             Margin="0, 0, 10, 0"
-                             controls:TextBoxHelper.Watermark="Enter product name..."/>
-                </DockPanel>
-            </Border>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="{x:Type Button}"
+                       BasedOn="{StaticResource ChromelessButtonStyle}">
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Padding="10">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Right">
+                    <Button Content="{iconPacks:PackIconModern Kind=Add}" 
+                            Command="{Binding AddNewCommand}" 
+                            Margin="0, 0, 10, 0" 
+                            Foreground="Blue"/>
+                    <Button Content="{iconPacks:PackIconModern Kind=Edit}" 
+                            Command="{Binding UpdateCommand}" 
+                            CommandParameter="{Binding SelectedProduct}" 
+                            Margin="0, 0, 10, 0" 
+                            Foreground="Green"/>
+                    <Button Content="{iconPacks:PackIconModern Kind=Delete}" 
+                            Margin="0, 0, 10, 0" 
+                            Foreground="Red"/>
+                    <Button Content="{iconPacks:PackIconModern Kind=OfficeExcel}" 
+                            Command="{Binding ExportCommand}" 
+                            CommandParameter="{Binding Products}" 
+                            Margin="0, 0, 0, 0" 
+                            Foreground="Orange"/>
+                </StackPanel>
+                <TextBox Style="{DynamicResource SearchMetroTextBox}"
+                            Margin="0, 0, 10, 0"
+                            controls:TextBoxHelper.Watermark="Enter product name..."/>
+            </DockPanel>
+        </Border>
 
         <Border Grid.Row="1" Padding="10, 10, 10, 0">
             <DataGrid AutoGenerateColumns="False"
