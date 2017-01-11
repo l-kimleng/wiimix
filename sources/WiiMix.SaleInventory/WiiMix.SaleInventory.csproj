@@ -133,6 +133,8 @@
     <Compile Include="IDialogService.cs" />
     <Compile Include="IProductInfoView.cs" />
     <Compile Include="IProductInfoViewModel.cs" />
+    <Compile Include="IStockInfoView.cs" />
+    <Compile Include="IStockInfoViewModel.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Config.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="ViewModels\ProductInfoViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
+    <Compile Include="ViewModels\StockInfoViewModel.cs" />
     <Compile Include="ViewModels\StockViewModel.cs" />
     <Compile Include="Views\InventoryView.xaml.cs">
       <DependentUpon>InventoryView.xaml</DependentUpon>
@@ -175,6 +178,9 @@
     </Compile>
     <Compile Include="Views\SaleView.xaml.cs">
       <DependentUpon>SaleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StockInfoView.xaml.cs">
+      <DependentUpon>StockInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StockView.xaml.cs">
       <DependentUpon>StockView.xaml</DependentUpon>
@@ -229,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SaleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StockInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
