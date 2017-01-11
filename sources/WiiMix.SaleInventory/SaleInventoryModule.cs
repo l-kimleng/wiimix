@@ -32,6 +32,7 @@ namespace WiiMix.SaleInventory
             _container.RegisterType<IProductRepository, ProductRepository>();
             _container.RegisterType<ICategoryRepository, CategoryRepository>();
             _container.RegisterType<IBrandRepository, BrandRepository>();
+            _container.RegisterType<IStockRepository, StockRepository>();
 
             _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterTypeForNavigation<ProductView>("Inventory/ProductView");

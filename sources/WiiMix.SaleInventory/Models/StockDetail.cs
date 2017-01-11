@@ -1,15 +1,49 @@
-﻿namespace WiiMix.SaleInventory.Models
+﻿using Prism.Mvvm;
+
+namespace WiiMix.SaleInventory.Models
 {
-    public class StockDetail
+    public class StockDetail : BindableBase
     {
-        public int Id { get; set; }
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
 
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        private int _productId;
+        public int ProductId
+        {
+            get { return _productId; }
+            set { SetProperty(ref _productId, value); }
+        }
 
-        public int StockId { get; set; }
-        public virtual Stock Stock { get; set; }
+        private Product _product;
+        public Product Product
+        {
+            get { return _product; }
+            set { SetProperty(ref _product, value); }
+        }
 
-        public float Quantity { get; set; }
+        private int _stockId;
+        public int StockId
+        {
+            get { return _stockId; }
+            set { SetProperty(ref _stockId, value); }
+        }
+
+        private Stock _stock;
+        public Stock Stock
+        {
+            get { return _stock; }
+            set { SetProperty(ref _stock, value); }
+        }
+
+        private float _quantity;
+        public float Quantity
+        {
+            get { return _quantity; }
+            set { SetProperty(ref _quantity, value); }
+        }
     }
 }

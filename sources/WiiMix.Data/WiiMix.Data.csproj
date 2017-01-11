@@ -78,6 +78,7 @@
     <Compile Include="Persistence\Repositories\ConfigRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\StockRepository.cs" />
     <Compile Include="Persistence\SaleInventoryContext.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Repositories\IConfigRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IStockRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

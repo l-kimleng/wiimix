@@ -6,7 +6,11 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:StockViewModel}">
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles/Controls.View.xaml"/>
     </UserControl.Resources>
@@ -43,29 +47,64 @@
                 </StackPanel>
                 <TextBox Style="{DynamicResource SearchMetroTextBox}"
                             Margin="0, 0, 10, 0"
-                            controls:TextBoxHelper.Watermark="Enter stock..."/>
+                            controls:TextBoxHelper.Watermark="Search stock..."/>
             </DockPanel>
         </Border>
 
         <Border Grid.Row="1" Padding="10, 10, 10, 0">
             <DataGrid AutoGenerateColumns="False"
+                      ItemsSource="{Binding StockCollectionView}"
+                      SelectedItem="{Binding SelectedStock, UpdateSourceTrigger=PropertyChanged}"
+                      SelectionMode="Single"
                       Style="{DynamicResource AzureDataGrid}"
-                      RowDetailsVisibilityMode="Collapsed">
+                      RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding}"/>
-                    <DataGridTextColumn Header="Product Name" Binding="{Binding}" Width="*"/>
-                    <DataGridTextColumn Header="Category" Binding="{Binding}"/>
-                    <DataGridTextColumn Header="Brand" Binding="{Binding}"/>
-                    <DataGridTextColumn Header="Price" Binding="{Binding}"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Transaction Date" Binding="{Binding Date, StringFormat=dd-MMM-yyyy}" Width="*" x:Name="TransactionHeader"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, StringFormat=F2}" />
+                    <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice, StringFormat=C2}"/>
                 </DataGrid.Columns>
-                <!--<DataGrid.RowDetailsTemplate>
+                <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <DockPanel>
-                            <Image DockPanel.Dock="Left" Source="{Binding Config.Image}" Width="72" Height="72" Margin="25,0,0,0"/>
-                            <TextBlock Text="{Binding Config.Feature}" TextAlignment="Justify" TextWrapping="NoWrap"/>
-                        </DockPanel>
+                            <StackPanel Grid.IsSharedSizeScope="True"
+                                        Margin="32, 5, 20, 5">
+                                <Border Background="Black">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="A"/>
+                                        <ColumnDefinition SharedSizeGroup="B"/>
+                                        <ColumnDefinition SharedSizeGroup="C"/>
+                                        <ColumnDefinition SharedSizeGroup="D"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Product ID" Grid.Column="0" FontWeight="Bold" Margin="20, 0" Foreground="White"/>
+                                    <TextBlock Text="Product Name" Grid.Column="1" FontWeight="Bold" Margin="20, 0" Foreground="White"/>
+                                    <TextBlock Text="Quantity" Grid.Column="2" FontWeight="Bold" HorizontalAlignment="Center" Margin="20, 0" Foreground="White"/>
+                                    <TextBlock Text="Price" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Right" Margin="20, 0" Foreground="White"/>
+                                </Grid>
+                            </Border>
+
+                                <ListBox ItemsSource="{Binding Details}" BorderBrush="Black" BorderThickness="1,0,1,1">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition SharedSizeGroup="A" />
+                                                        <ColumnDefinition SharedSizeGroup="B" />
+                                                        <ColumnDefinition SharedSizeGroup="C" />
+                                                        <ColumnDefinition SharedSizeGroup="D" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding ProductId}"  Grid.Column="0" Padding="20, 0"/>
+                                                    <TextBlock Text="{Binding Product.Name}" Grid.Column="1" Padding="20, 0" />
+                                                    <TextBlock Text="{Binding Quantity, StringFormat=F2}" Grid.Column="2" HorizontalAlignment="Center" Padding="20, 0"/>
+                                                    <TextBlock Text="{Binding Product.Config.Price, StringFormat=C2}" Grid.Column="3" HorizontalAlignment="Right" Padding="20, 0"/>
+                                                </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
                     </DataTemplate>
-                </DataGrid.RowDetailsTemplate>-->
+                </DataGrid.RowDetailsTemplate>
             </DataGrid>
         </Border>
     </Grid>
