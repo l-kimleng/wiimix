@@ -37,6 +37,8 @@ namespace WiiMix.SaleInventory.ViewModels
                 Price = product.Config.Price,
                 Product = product,
             });
+            Stock.Quantity++;
+            Stock.TotalPrice += product.Config.Price;
             Products.RemoveAt(Products.IndexOf(Products.FirstOrDefault(x => x.Id == product.Id)));
         }
 

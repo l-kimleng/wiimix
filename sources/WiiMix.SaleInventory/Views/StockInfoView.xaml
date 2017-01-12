@@ -148,7 +148,8 @@
                                 <DataGridTextColumn Header="Brand" Binding="{Binding Product.Brand.Name}"/>
                                 <controls:DataGridNumericUpDownColumn Header="Quantity" 
                                                                       Binding="{Binding Quantity, StringFormat=F2}"
-                                                                      Minimum="1"/>
+                                                                      Minimum="1"
+                                                                      Interval="1"/>
                                 <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C2}"/>
                             </DataGrid.Columns>
                         </DataGrid>
