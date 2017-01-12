@@ -7,9 +7,9 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
              d:DataContext="{d:DesignInstance viewModels:StockViewModel}">
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles/Controls.View.xaml"/>
@@ -36,7 +36,7 @@
                 <StackPanel Orientation="Horizontal"
                             DockPanel.Dock="Right">
                     <Button Content="{iconPacks:PackIconModern Kind=Add}" 
-                            Command="{Binding}" 
+                            Command="{Binding AddStockCommand}" 
                             Margin="0, 0, 10, 0" 
                             Foreground="Blue"/>
                     <Button Content="{iconPacks:PackIconModern Kind=Edit}" 

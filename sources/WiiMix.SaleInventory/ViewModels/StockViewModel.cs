@@ -1,22 +1,34 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
 using WiiMix.Data;
+using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
     public class StockViewModel : BindableBase
     {
+        private readonly IEventAggregator _eventAggregator;
         private readonly IUnitOfWork _unitOfWork;
 
-        public StockViewModel(IUnitOfWork unitOfWork)
+        public StockViewModel(IEventAggregator eventAggregator, IUnitOfWork unitOfWork)
         {
+            _eventAggregator = eventAggregator;
             _unitOfWork = unitOfWork;
             GetAll();
+            AddStockCommand = new DelegateCommand(OnStockAddCommand);
+        }
+
+        private void OnStockAddCommand()
+        {
+            _eventAggregator.GetEvent<StockLoadedEvent>().Publish(null);
         }
 
         private ObservableCollection<Stock> _stocks;
@@ -77,6 +89,9 @@ namespace WiiMix.SaleInventory.ViewModels
             return myStock;
         }
 
+        [Microsoft.Practices.Unity.Dependency]
+        public IStockInfoViewModel StockInfoViewModel { get; set; }
+        public ICommand AddStockCommand { get; private set; }
         private IList<Product> _products;
         private StockDetail BuildStockDetail(WiiMix.Data.Entities.StockDetail detail)
         {

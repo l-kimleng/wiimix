@@ -11,6 +11,10 @@ namespace WiiMix.Data.Persistence.EntityConfigurations
                 .HasColumnType("Real")
                 .IsRequired();
 
+            Property(x => x.Price)
+                .HasColumnType("Money")
+                .IsRequired();
+
             HasRequired(x => x.Product)
                 .WithMany(x => x.Details)
                 .HasForeignKey(x => x.ProductId)

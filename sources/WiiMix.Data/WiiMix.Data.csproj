@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201701110305286_PopulateDataToStock.Designer.cs">
       <DependentUpon>201701110305286_PopulateDataToStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701120259525_AddPriceFieldToSaleDetailed.cs" />
+    <Compile Include="Migrations\201701120259525_AddPriceFieldToSaleDetailed.Designer.cs">
+      <DependentUpon>201701120259525_AddPriceFieldToSaleDetailed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\BrandConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CategoryConfiguration.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701110305286_PopulateDataToStock.resx">
       <DependentUpon>201701110305286_PopulateDataToStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701120259525_AddPriceFieldToSaleDetailed.resx">
+      <DependentUpon>201701120259525_AddPriceFieldToSaleDetailed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -39,6 +39,8 @@ namespace WiiMix.SaleInventory
             _container.RegisterTypeForNavigation<StockView>("Inventory/StockView");
             _container.RegisterType<IProductInfoView, ProductInfoView>(new TransientLifetimeManager());
             _container.RegisterType<IProductInfoViewModel, ProductInfoViewModel>();
+            _container.RegisterType<IStockInfoView, StockInfoView>(new TransientLifetimeManager());
+            _container.RegisterType<IStockInfoViewModel, StockInfoViewModel>();
 
             InitializeMapper();
 

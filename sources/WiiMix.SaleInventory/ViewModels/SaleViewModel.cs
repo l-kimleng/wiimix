@@ -7,12 +7,8 @@ namespace WiiMix.SaleInventory.ViewModels
     {
         public SaleViewModel()
         {
-
         }
 
-        public string Title
-        {
-            get { return ModuleConstantCollection.SaleHeaderTitle; }
-        }
+        public string Title => ModuleConstantCollection.SaleHeaderTitle;
     }
 }

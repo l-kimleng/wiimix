@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Controls\TabControlHelper.cs" />
     <Compile Include="Events\ProductEvent.cs" />
+    <Compile Include="Events\StockEvent.cs" />
     <Compile Include="IDialogService.cs" />
     <Compile Include="IProductInfoView.cs" />
     <Compile Include="IProductInfoViewModel.cs" />

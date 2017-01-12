@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
         mc:Ignorable="d"
         Title="Stock Entry"
         GlowBrush="{DynamicResource AccentColorBrush}"
@@ -14,9 +15,10 @@
         ShowCloseButton="True"
         WindowStartupLocation="CenterScreen"
         ShowIconOnTitleBar="False"
-        Width="750" 
-        Height="500"
-        ResizeMode="NoResize">
+        Width="900" 
+        Height="750"
+        ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance viewModels:StockInfoViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -27,7 +29,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="32"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="350"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -57,57 +59,106 @@
                         Command="{Binding CancelCommand}"
                         Grid.ColumnSpan="2"
                         Grid.RowSpan="1"/>
-
-                <StackPanel Margin="20" 
-                            Grid.Column="1" 
-                            Grid.Row="0">
-                            <TextBox Style="{DynamicResource SearchMetroTextBox}"
+                 
+                <Grid Margin="20"
+                      Grid.Column="1"
+                      Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBox Style="{DynamicResource SearchMetroTextBox}"
                                      Margin="0,5"
                                      controls:TextBoxHelper.Watermark="Enter product name..."/>
-                            <ListBox BorderBrush="Black" BorderThickness="1"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Stretch">
-                            </ListBox>
-                </StackPanel>
-                <StackPanel Margin="20"
-                            Grid.Column="2"
-                            Grid.Row="0">
-                            <TextBlock Text="Transaction Date" Margin="0,5" />
-                            <controls:DateTimePicker Margin="0,5"/>
-                            <Grid Margin="0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
+                    <ListBox BorderThickness="1"
+                                    ItemsSource="{Binding ProductCollectionView}"
+                                    SelectedItem="{Binding SelectedProduct}"
+                                    Style="{StaticResource MetroListBox}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    Grid.Row="1">
+                        <ListBox.Resources>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0, 5">
+                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <WrapPanel >
+                                        <Border BorderThickness="1" CornerRadius="2" Background="#E87E04" Padding="5">
+                                            <TextBlock Text="{Binding Brand.Name}" FontSize="12" FontWeight="Light"/>
+                                        </Border>
+                                        <Border BorderThickness="1" CornerRadius="2" Background="#F2784B" Padding="5">
+                                            <TextBlock Text="{Binding Category.Name}" FontSize="12" FontWeight="Light"/>
+                                        </Border>
+                                        <Border BorderThickness="1" CornerRadius="2" Background="#EF4836" Padding="5">
+                                            <TextBlock Text="{Binding Config.Price, StringFormat=C2}" FontSize="12" FontWeight="ExtraBold"/>
+                                        </Border>
+                                        <Border BorderThickness="1" CornerRadius="2" Background="#7f8c8d" Padding="10,5">
+                                            <Button Cursor="Hand"
+                                                    Command="{Binding DataContext.AddToCartCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}">
+                                                <iconPacks:PackIconFontAwesome Kind="ShoppingCart" Margin="0"/>
+                                            </Button>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+
+                <Grid Margin="20"
+                      Grid.Column="2"
+                      Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                     <TextBlock Text="Transaction Date" Margin="0,5" />
+                     <DatePicker Margin="0,5" SelectedDate="{Binding Stock.Date, StringFormat=dd-MMM-yyyy}" Grid.Row="1"/>
+                    <Grid Margin="0,5" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,5,0">
                             <TextBlock Text="Quantity" Margin="0,5"/>
-                            <TextBlock Text="{Binding}" Margin="0,5"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1">
+                            <TextBox Text="{Binding Stock.Quantity}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,0,0,0">
                             <TextBlock Text="Total Price" Margin="0,5"/>
-                            <TextBlock Text="{Binding}" Margin="0,5"/>
-                                </StackPanel>
-                            </Grid>
+                            <TextBox Text="{Binding Stock.TotalPrice}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
+                        </StackPanel>
+                    </Grid>
                     <DataGrid AutoGenerateColumns="False"
-                              Margin="0,5"
+                              Margin="0,5,0,0"
+                              ItemsSource="{Binding Stock.Details}"
                               Style="{DynamicResource AzureDataGrid}"
                               HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding}"/>
-                            <DataGridTextColumn Header="Product Name" Binding="{Binding}" Width="*"/>
-                            <DataGridTextColumn Header="Category" Binding="{Binding}"/>
-                            <DataGridTextColumn Header="Brand" Binding="{Binding}"/>
-                            <DataGridTextColumn Header="Price" Binding="{Binding}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </StackPanel>
+                              VerticalAlignment="Stretch"
+                              BorderThickness="1"
+                              Grid.Row="3"
+                              CanUserAddRows="False"
+                              HorizontalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" Width="*"/>
+                                <DataGridTextColumn Header="Brand" Binding="{Binding Product.Brand.Name}"/>
+                                <controls:DataGridNumericUpDownColumn Header="Quantity" 
+                                                                      Binding="{Binding Quantity, StringFormat=F2}"
+                                                                      Minimum="1"/>
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C2}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                </Grid>
                 <Button Margin="20,0,0,0" 
                         Grid.Row="1"
                         Grid.Column="1"
                         HorizontalAlignment="Left"
-                        Command="{Binding SaveCommand}"
-                        CommandParameter="{Binding Product}">
+                        Command="{Binding}"
+                        CommandParameter="{Binding}">
                     <Border BorderThickness="1" 
                             BorderBrush="{DynamicResource ControlBorderBrush}"
                             Padding="10,5">

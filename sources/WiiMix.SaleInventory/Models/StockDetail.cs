@@ -45,5 +45,12 @@ namespace WiiMix.SaleInventory.Models
             get { return _quantity; }
             set { SetProperty(ref _quantity, value); }
         }
+
+        private decimal _price;
+        public decimal Price
+        {
+            get { return _price; }
+            set { SetProperty(ref _price, value); }
+        }
     }
 }

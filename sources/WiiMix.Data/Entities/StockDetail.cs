@@ -11,5 +11,6 @@
         public virtual Stock Stock { get; set; }
 
         public float Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }
