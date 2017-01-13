@@ -24,22 +24,49 @@ namespace WiiMix.SaleInventory.ViewModels
             _container = container;
             CancelCommand = new DelegateCommand(OnCancelCommand);
             AddToCartCommand = new DelegateCommand<Product>(OnProductAddedToCart);
+            RemoveFromCartCommand = new DelegateCommand<StockDetail>(OnProductRemoveFromCartCommand);
             eventAggregator.GetEvent<StockLoadedEvent>().Subscribe(OnLoadedStock);
+        }
+
+        private void OnProductRemoveFromCartCommand(StockDetail stockDetail)
+        {
+            
         }
 
         private void OnProductAddedToCart(Product product)
         {
             if(Stock.Details == null) Stock.Details = new ObservableCollection<StockDetail>();
-            Stock.Details.Add(new StockDetail
+            var productItem = new StockDetail
             {
+
                 ProductId = product.Id,
                 Quantity = 1,
                 Price = product.Config.Price,
-                Product = product,
-            });
+                Product = product
+            };
+            productItem.PropertyChanged += ProductItem_PropertyChanged;
+            Stock.Details.Add(productItem);
             Stock.Quantity++;
             Stock.TotalPrice += product.Config.Price;
             Products.RemoveAt(Products.IndexOf(Products.FirstOrDefault(x => x.Id == product.Id)));
+        }
+
+        private void ProductItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Quantity" || e.PropertyName == "Price")
+            {
+                var stockDetail = sender as StockDetail;
+                if (stockDetail != null)
+                {
+                    Stock.Quantity = 0;
+                    Stock.TotalPrice = 0;
+                    foreach (var product in Stock.Details)
+                    {
+                        Stock.Quantity += product.Quantity;
+                        Stock.TotalPrice += (decimal)product.Quantity*product.Price;
+                    }
+                }
+            }
         }
 
         private void OnCancelCommand()
@@ -120,5 +147,6 @@ namespace WiiMix.SaleInventory.ViewModels
 
         public ICommand CancelCommand { get; private set; }
         public ICommand AddToCartCommand { get; private set; }
+        public ICommand RemoveFromCartCommand { get; private set; }
     }
 }

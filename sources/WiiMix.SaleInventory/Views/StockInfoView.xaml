@@ -6,7 +6,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:WiiMix.SaleInventory.ViewModels"
-        mc:Ignorable="d"
+                      mc:Ignorable="d"
         Title="Stock Entry"
         GlowBrush="{DynamicResource AccentColorBrush}"
         ShowTitleBar="True"
@@ -133,7 +133,7 @@
                             <TextBox Text="{Binding Stock.TotalPrice}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
                         </StackPanel>
                     </Grid>
-                    <DataGrid AutoGenerateColumns="False"
+                    <DataGrid x:Name="DataGridProductItem" AutoGenerateColumns="False"
                               Margin="0,5,0,0"
                               ItemsSource="{Binding Stock.Details}"
                               Style="{DynamicResource AzureDataGrid}"
@@ -143,14 +143,33 @@
                               Grid.Row="3"
                               CanUserAddRows="False"
                               HorizontalScrollBarVisibility="Auto">
-                            <DataGrid.Columns>
+                        <DataGrid.Columns>
                                 <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" Width="*"/>
                                 <DataGridTextColumn Header="Brand" Binding="{Binding Product.Brand.Name}"/>
-                                <controls:DataGridNumericUpDownColumn Header="Quantity" 
-                                                                      Binding="{Binding Quantity, StringFormat=F2}"
-                                                                      Minimum="1"
-                                                                      Interval="1"/>
+                                <DataGridTemplateColumn Header="Quantity">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <controls:NumericUpDown Margin="2"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Right"
+                                                                Minimum="0"
+                                                                Interval="1"
+                                                                Value="{Binding Quantity, StringFormat=F2, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C2}"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Cursor="Hand"
+                                                        Command="{Binding DataContext.RemoveFromCartCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                        CommandParameter="{Binding}">
+                                                <iconPacks:PackIconFontAwesome Kind="Trash" Margin="0"/>
+                                            </Button>   
+                                    </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                 </Grid>
@@ -173,3 +192,4 @@
         </Border>
     </Grid>
 </controls:MetroWindow>
+
