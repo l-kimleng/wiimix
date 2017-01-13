@@ -126,11 +126,11 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,5,0">
                             <TextBlock Text="Quantity" Margin="0,5"/>
-                            <TextBox Text="{Binding Stock.Quantity}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
+                            <TextBox Text="{Binding Stock.Quantity, StringFormat=F2}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="5,0,0,0">
                             <TextBlock Text="Total Price" Margin="0,5"/>
-                            <TextBox Text="{Binding Stock.TotalPrice}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
+                            <TextBox Text="{Binding Stock.TotalPrice, StringFormat=C2}" Margin="0,5" IsReadOnly="True" BorderThickness="1"/>
                         </StackPanel>
                     </Grid>
                     <DataGrid x:Name="DataGridProductItem" AutoGenerateColumns="False"
@@ -158,8 +158,8 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C2}"/>
-                                <DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C2}" Width="*"/>
+                                <DataGridTemplateColumn Header="Action">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Cursor="Hand"
@@ -177,8 +177,8 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         HorizontalAlignment="Left"
-                        Command="{Binding}"
-                        CommandParameter="{Binding}">
+                        Command="{Binding SaveStockCommand}"
+                        CommandParameter="{Binding Stock}">
                     <Border BorderThickness="1" 
                             BorderBrush="{DynamicResource ControlBorderBrush}"
                             Padding="10,5">

@@ -130,6 +130,7 @@ namespace WiiMix.SaleInventory.ViewModels
                 myDetail.Id = detail.Id;
                 myDetail.ProductId = p.Id;
                 myDetail.Quantity = detail.Quantity;
+                myDetail.Price = detail.Price;
                 myDetail.StockId = detail.StockId;
                 myDetail.Product = p;
             }

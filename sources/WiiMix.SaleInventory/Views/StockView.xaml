@@ -97,7 +97,7 @@
                                                     <TextBlock Text="{Binding ProductId}"  Grid.Column="0" Padding="20, 0"/>
                                                     <TextBlock Text="{Binding Product.Name}" Grid.Column="1" Padding="20, 0" />
                                                     <TextBlock Text="{Binding Quantity, StringFormat=F2}" Grid.Column="2" HorizontalAlignment="Center" Padding="20, 0"/>
-                                                    <TextBlock Text="{Binding Product.Config.Price, StringFormat=C2}" Grid.Column="3" HorizontalAlignment="Right" Padding="20, 0"/>
+                                                    <TextBlock Text="{Binding Price, StringFormat=C2}" Grid.Column="3" HorizontalAlignment="Right" Padding="20, 0"/>
                                                 </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

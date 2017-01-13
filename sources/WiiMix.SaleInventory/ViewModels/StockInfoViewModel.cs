@@ -2,6 +2,8 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -25,12 +27,44 @@ namespace WiiMix.SaleInventory.ViewModels
             CancelCommand = new DelegateCommand(OnCancelCommand);
             AddToCartCommand = new DelegateCommand<Product>(OnProductAddedToCart);
             RemoveFromCartCommand = new DelegateCommand<StockDetail>(OnProductRemoveFromCartCommand);
+            SaveStockCommand = new DelegateCommand<Stock>(OnStockSave);
             eventAggregator.GetEvent<StockLoadedEvent>().Subscribe(OnLoadedStock);
+        }
+
+        private void OnStockSave(Stock stock)
+        {
+            using (_unitOfWork = _container.Resolve<IUnitOfWork>())
+            {
+                var saveStock = new Data.Entities.Stock();
+                saveStock.Date = stock.Date;
+                saveStock.Quantity = stock.Quantity;
+                saveStock.TotalPrice = stock.TotalPrice;
+                saveStock.Details = new List<Data.Entities.StockDetail>();
+                foreach (var detail in stock.Details)
+                {
+                    saveStock.Details.Add(new Data.Entities.StockDetail
+                    {
+                        ProductId = detail.ProductId,
+                        Quantity = detail.Quantity,
+                        Price = detail.Price,
+                    });
+                }
+                _unitOfWork.StockRepository.Add(saveStock);
+                var result = _unitOfWork.Completed();
+                if (result > 0)
+                {
+                    
+                }
+            }
         }
 
         private void OnProductRemoveFromCartCommand(StockDetail stockDetail)
         {
-            
+            var details = Stock.Details;
+            details.RemoveAt(details.IndexOf(details.FirstOrDefault(x => x.ProductId == stockDetail.ProductId)));
+            Products.Add(stockDetail.Product);
+            Stock.Quantity -= stockDetail.Quantity;
+            Stock.TotalPrice -= (decimal)stockDetail.Quantity*stockDetail.Price;
         }
 
         private void OnProductAddedToCart(Product product)
@@ -38,7 +72,6 @@ namespace WiiMix.SaleInventory.ViewModels
             if(Stock.Details == null) Stock.Details = new ObservableCollection<StockDetail>();
             var productItem = new StockDetail
             {
-
                 ProductId = product.Id,
                 Quantity = 1,
                 Price = product.Config.Price,
@@ -119,7 +152,7 @@ namespace WiiMix.SaleInventory.ViewModels
         private Stock _stock;
         public Stock Stock
         {
-            get { return _stock ?? (_stock = new Stock()); }
+            get { return _stock ?? (_stock = new Stock() {Date = DateTime.Now}); }
             set { SetProperty(ref _stock, value); }
         }
 
@@ -148,5 +181,6 @@ namespace WiiMix.SaleInventory.ViewModels
         public ICommand CancelCommand { get; private set; }
         public ICommand AddToCartCommand { get; private set; }
         public ICommand RemoveFromCartCommand { get; private set; }
+        public ICommand SaveStockCommand { get; private set; }
     }
 }
