@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using AutoMapper;
+using OfficeOpenXml;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -19,7 +20,6 @@ namespace WiiMix.SaleInventory.ViewModels
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IUnitOfWork _unitOfWork;
-
         public ProductViewModel(IEventAggregator eventAggregator, IUnitOfWork unitOfWork)
         {
             _eventAggregator = eventAggregator;
@@ -110,31 +110,7 @@ namespace WiiMix.SaleInventory.ViewModels
                 //Products.AddRange(Mapper.Map<IEnumerable<Product>>(productRepository.Find()));
                 foreach (var product in productRepository.Find())
                 {
-                    Products.Add(new Product
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        CategoryId = product.CategoryId,
-                        BrandId = product.BrandId,
-                        Category = new Category
-                        {
-                            Id = product.Category.Id,
-                            Name = product.Category.Name
-                        },
-                        Brand = new Brand
-                        {
-                            Id = product.Brand.Id,
-                            Name = product.Brand.Name
-                        },
-                        Config = new Config
-                        {
-                            ProductId = product.Config.ProductId,
-                            Feature = product.Config.Feature,
-                            Price = product.Config.Price,
-                            Image = product.Config.Image
-                        }
-                    });
-                    //Products.Add(Mapper.Map<Product>(product));
+                    Products.Add(Mapper.Map<Product>(product));
                 }
                 ProductCollectionView = CollectionViewSource.GetDefaultView(Products);
                 if (Products.Count > 0)

@@ -136,27 +136,7 @@ namespace WiiMix.SaleInventory.ViewModels
                     _products = new List<Product>();
                     foreach (var product in _unitOfWork.ProductRepository.Find())
                     {
-                        _products.Add(new Product
-                        {
-                            Id = product.Id,
-                            Name = product.Name,
-                            Config = new Config
-                            {
-                                Feature = product.Config.Feature,
-                                Price = product.Config.Price,
-                                Image = product.Config.Image
-                            },
-                            Category = new Category
-                            {
-                                Id = product.CategoryId,
-                                Name = product.Category.Name
-                            },
-                            Brand = new Brand
-                            {
-                                Id = product.BrandId,
-                                Name = product.Brand.Name
-                            }
-                        });
+                        _products.Add(AutoMapper.Mapper.Map<Product>(product));
                     }
                 }
                 var p = _products.SingleOrDefault(x => x.Id == detail.ProductId);

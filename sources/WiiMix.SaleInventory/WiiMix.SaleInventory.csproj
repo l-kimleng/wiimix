@@ -155,6 +155,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SaleInventoryMappingProfile.cs" />
     <Compile Include="Utils\ModuleConstantCollection.cs" />
     <Compile Include="Utils\RegionConstantCollection.cs" />
     <Compile Include="SaleInventoryModule.cs" />

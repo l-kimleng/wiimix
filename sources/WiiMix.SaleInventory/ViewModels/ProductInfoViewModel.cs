@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using AutoMapper;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Mvvm;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using WiiMix.Data;
-//using WiiMix.Data.Entities;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Models;
 
@@ -126,12 +126,7 @@ namespace WiiMix.SaleInventory.ViewModels
                     Categories = new List<Category>();
                     foreach (var category in unitOfWork.CategoryRepository.GetAll())
                     {
-                        //Categories.Add(Mapper.Map<Category>(category));
-                        Categories.Add(new Category
-                        {
-                            Id = category.Id,
-                            Name = category.Name
-                        });
+                        Categories.Add(Mapper.Map<Category>(category));
                     }
                 }
                 if (Brands == null)
@@ -139,12 +134,7 @@ namespace WiiMix.SaleInventory.ViewModels
                     Brands = new List<Brand>();
                     foreach (var brand in unitOfWork.BrandRepository.GetAll())
                     {
-                        //Brands.Add(Mapper.Map<Brand>(brand));
-                        Brands.Add(new Brand
-                        {
-                            Id   = brand.Id,
-                            Name = brand.Name
-                        });
+                        Brands.Add(Mapper.Map<Brand>(brand));
                     }
                 }
             }
