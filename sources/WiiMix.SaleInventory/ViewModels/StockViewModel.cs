@@ -24,10 +24,42 @@ namespace WiiMix.SaleInventory.ViewModels
             _unitOfWork = unitOfWork;
             GetAll();
             AddStockCommand = new DelegateCommand(OnStockAddCommand);
+            UpdateStockCommand = new DelegateCommand<Stock>(OnStockUpdateCommand);
+            eventAggregator.GetEvent<StockCreateCompletedEvent>().Subscribe(OnSaveStockCompleted);
+            eventAggregator.GetEvent<StockUpdateCompletedEvent>().Subscribe(OnSaveStockCompleted);
+        }
+
+        private void OnStockUpdateCommand(Stock stock)
+        {
+            _isUpdated = true;
+            _eventAggregator.GetEvent<StockLoadedEvent>().Publish(stock);
+        }
+
+        private bool _isUpdated = true;
+        private void OnSaveStockCompleted(Stock stock)
+        {
+            if (_isUpdated)
+            {
+                SelectedStock.Date = stock.Date;
+                SelectedStock.Quantity = stock.Quantity;
+                SelectedStock.TotalPrice = stock.TotalPrice;
+                foreach (var stockDetail in SelectedStock.Details)
+                {
+                    var d = stock.Details.FirstOrDefault(x => x.ProductId == stockDetail.ProductId);
+                    if (d == null) continue;
+                    stockDetail.Quantity = d.Quantity;
+                    stockDetail.Price = d.Price;
+                }
+            }
+            else
+            {
+                Stocks.Add(stock);
+            }
         }
 
         private void OnStockAddCommand()
         {
+            _isUpdated = false;
             _eventAggregator.GetEvent<StockLoadedEvent>().Publish(null);
         }
 
@@ -92,6 +124,7 @@ namespace WiiMix.SaleInventory.ViewModels
         [Microsoft.Practices.Unity.Dependency]
         public IStockInfoViewModel StockInfoViewModel { get; set; }
         public ICommand AddStockCommand { get; private set; }
+        public ICommand UpdateStockCommand { get; private set; }
         private IList<Product> _products;
         private StockDetail BuildStockDetail(WiiMix.Data.Entities.StockDetail detail)
         {
@@ -127,12 +160,16 @@ namespace WiiMix.SaleInventory.ViewModels
                     }
                 }
                 var p = _products.SingleOrDefault(x => x.Id == detail.ProductId);
-                myDetail.Id = detail.Id;
-                myDetail.ProductId = p.Id;
-                myDetail.Quantity = detail.Quantity;
-                myDetail.Price = detail.Price;
-                myDetail.StockId = detail.StockId;
-                myDetail.Product = p;
+                if (p != null)
+                {
+                    myDetail.Id = detail.Id;
+                    myDetail.ProductId = p.Id;
+                    myDetail.Quantity = detail.Quantity;
+                    myDetail.Price = detail.Price;
+                    myDetail.StockId = detail.StockId;
+                    myDetail.Product = p;
+
+                }
             }
             return myDetail;
         }

@@ -20,5 +20,12 @@ namespace WiiMix.Data.Persistence.Repositories
             var stocks = _context.Stocks.Include(s => s.Details);
             return stocks.ToList();
         }
+
+        public Stock FindUpdate(int stockId)
+        {
+            var stock = _context.Stocks.Include(d => d.Details)
+                .FirstOrDefault(x => x.Id == stockId);
+            return stock;
+        }
     }
 }

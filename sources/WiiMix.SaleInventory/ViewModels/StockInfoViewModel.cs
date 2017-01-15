@@ -18,12 +18,14 @@ namespace WiiMix.SaleInventory.ViewModels
     public class StockInfoViewModel : BindableBase, IStockInfoViewModel
     {
         private readonly IUnityContainer _container;
+        private readonly IEventAggregator _eventAggregator;
         private IUnitOfWork _unitOfWork;
         private IStockInfoView _stockInfoView;
 
         public StockInfoViewModel(IUnityContainer container, IEventAggregator eventAggregator)
         {
             _container = container;
+            _eventAggregator = eventAggregator;
             CancelCommand = new DelegateCommand(OnCancelCommand);
             AddToCartCommand = new DelegateCommand<Product>(OnProductAddedToCart);
             RemoveFromCartCommand = new DelegateCommand<StockDetail>(OnProductRemoveFromCartCommand);
@@ -33,27 +35,67 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnStockSave(Stock stock)
         {
+            var isUpdated = stock.Id > 0;
             using (_unitOfWork = _container.Resolve<IUnitOfWork>())
             {
-                var saveStock = new Data.Entities.Stock();
-                saveStock.Date = stock.Date;
-                saveStock.Quantity = stock.Quantity;
-                saveStock.TotalPrice = stock.TotalPrice;
-                saveStock.Details = new List<Data.Entities.StockDetail>();
-                foreach (var detail in stock.Details)
+                var newStock = new Data.Entities.Stock();
+                var saveStock = (isUpdated) ? _unitOfWork.StockRepository.FindUpdate(stock.Id) : new Data.Entities.Stock
                 {
-                    saveStock.Details.Add(new Data.Entities.StockDetail
+                    Date = stock.Date,
+                    Quantity = stock.Quantity,
+                    TotalPrice = stock.TotalPrice,
+                    Details = new List<Data.Entities.StockDetail>()
+                };
+                
+                var result = 0;
+                if (isUpdated)
+                {
+                    saveStock.Date = stock.Date;
+                    saveStock.Quantity = stock.Quantity;
+                    saveStock.TotalPrice = stock.TotalPrice;
+                    foreach (var detail in saveStock.Details)
                     {
-                        ProductId = detail.ProductId,
-                        Quantity = detail.Quantity,
-                        Price = detail.Price,
-                    });
+                        var s = stock.Details.FirstOrDefault(d => d.ProductId == detail.ProductId);
+                        if (s == null) continue;
+                        detail.Quantity = s.Quantity;
+                        detail.Price = s.Price;
+                    }
+                    _unitOfWork.StockRepository.Update(saveStock);
                 }
-                _unitOfWork.StockRepository.Add(saveStock);
-                var result = _unitOfWork.Completed();
+                else
+                {
+                    foreach (var detail in stock.Details)
+                    {
+                        saveStock.Details.Add(new Data.Entities.StockDetail
+                        {
+                            ProductId = detail.ProductId,
+                            Quantity = detail.Quantity,
+                            Price = detail.Price,
+                        });
+                    }
+                    newStock = _unitOfWork.StockRepository.Add(saveStock);
+                }
+                result = _unitOfWork.Completed();
                 if (result > 0)
                 {
-                    
+                    if (newStock.Id > 0)
+                    {
+                        Stock.Id = newStock.Id;
+                        foreach (var stockDetail in Stock.Details)
+                        {
+                            var stockDetailDb =
+                                newStock.Details.SingleOrDefault(x => x.ProductId == stockDetail.ProductId);
+                            if (stockDetailDb == null) continue;
+                            stockDetail.Id = stockDetailDb.Id;
+                            stockDetail.ProductId = stockDetailDb.ProductId;
+                            stockDetail.StockId = stockDetailDb.StockId;
+                        }
+                        _eventAggregator.GetEvent<StockCreateCompletedEvent>().Publish(Stock);
+                    }
+                    else
+                    {
+                        _eventAggregator.GetEvent<StockUpdateCompletedEvent>().Publish(Stock);
+                    }
                 }
             }
         }
@@ -69,7 +111,6 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnProductAddedToCart(Product product)
         {
-            if(Stock.Details == null) Stock.Details = new ObservableCollection<StockDetail>();
             var productItem = new StockDetail
             {
                 ProductId = product.Id,
@@ -77,11 +118,18 @@ namespace WiiMix.SaleInventory.ViewModels
                 Price = product.Config.Price,
                 Product = product
             };
-            productItem.PropertyChanged += ProductItem_PropertyChanged;
-            Stock.Details.Add(productItem);
+            Add(productItem);
+        }
+
+        private void Add(StockDetail stockDetail)
+        {
+            if (Stock.Details == null) Stock.Details = new ObservableCollection<StockDetail>();
+
+            stockDetail.PropertyChanged += ProductItem_PropertyChanged;
+            Stock.Details.Add(stockDetail);
             Stock.Quantity++;
-            Stock.TotalPrice += product.Config.Price;
-            Products.RemoveAt(Products.IndexOf(Products.FirstOrDefault(x => x.Id == product.Id)));
+            Stock.TotalPrice += stockDetail.Price;
+            Products.RemoveAt(Products.IndexOf(Products.FirstOrDefault(x => x.Id == stockDetail.ProductId)));
         }
 
         private void ProductItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -110,7 +158,19 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void OnLoadedStock(Stock stock)
         {
+            Stock = new Stock { Date = DateTime.Now };
             Initialize();
+            if (stock != null)
+            {
+                Stock.Id = stock.Id;
+                Stock.Date = stock.Date;
+                Stock.Quantity = stock.Quantity;
+                Stock.TotalPrice = stock.TotalPrice;
+                foreach (var stockDetail in stock.Details)
+                {
+                    Add(stockDetail);
+                }
+            }
             ShowDialog();
         }
 
@@ -152,7 +212,7 @@ namespace WiiMix.SaleInventory.ViewModels
         private Stock _stock;
         public Stock Stock
         {
-            get { return _stock ?? (_stock = new Stock() {Date = DateTime.Now}); }
+            get { return _stock; }
             set { SetProperty(ref _stock, value); }
         }
 
