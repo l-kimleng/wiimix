@@ -1,4 +1,6 @@
-﻿namespace WiiMix.SaleInventory.Views
+﻿using WiiMix.SaleInventory.Interface;
+
+namespace WiiMix.SaleInventory.Views
 {
     /// <summary>
     /// Interaction logic for ProductInfoView.xaml

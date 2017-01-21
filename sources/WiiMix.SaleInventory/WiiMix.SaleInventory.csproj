@@ -131,11 +131,11 @@
     <Compile Include="Controls\TabControlHelper.cs" />
     <Compile Include="Events\ProductEvent.cs" />
     <Compile Include="Events\StockEvent.cs" />
-    <Compile Include="IDialogService.cs" />
-    <Compile Include="IProductInfoView.cs" />
-    <Compile Include="IProductInfoViewModel.cs" />
-    <Compile Include="IStockInfoView.cs" />
-    <Compile Include="IStockInfoViewModel.cs" />
+    <Compile Include="Interface\IDialogService.cs" />
+    <Compile Include="Interface\IProductInfoView.cs" />
+    <Compile Include="Interface\IProductInfoViewModel.cs" />
+    <Compile Include="Interface\IStockInfoView.cs" />
+    <Compile Include="Interface\IStockInfoViewModel.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Config.cs" />
@@ -263,6 +263,7 @@
       <Name>WiiMix.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

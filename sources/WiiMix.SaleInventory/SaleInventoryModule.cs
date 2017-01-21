@@ -8,6 +8,7 @@ using WiiMix.Data;
 using WiiMix.Data.Persistence;
 using WiiMix.Data.Persistence.Repositories;
 using WiiMix.Data.Repositories;
+using WiiMix.SaleInventory.Interface;
 using WiiMix.SaleInventory.Utils;
 using WiiMix.SaleInventory.ViewModels;
 using WiiMix.SaleInventory.Views;

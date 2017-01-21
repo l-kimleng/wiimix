@@ -1,4 +1,4 @@
-﻿namespace WiiMix.SaleInventory
+﻿namespace WiiMix.SaleInventory.Interface
 {
     public interface IStockInfoViewModel
     {

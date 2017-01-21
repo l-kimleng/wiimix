@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Input;
 using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
+using WiiMix.SaleInventory.Interface;
 using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
