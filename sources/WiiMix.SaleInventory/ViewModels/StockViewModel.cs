@@ -10,7 +10,7 @@ using System.Windows.Input;
 using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
-using WiiMix.SaleInventory.Models;
+using WiiMix.Business.Model;
 
 namespace WiiMix.SaleInventory.ViewModels
 {

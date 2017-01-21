@@ -136,12 +136,6 @@
     <Compile Include="Interface\IProductInfoViewModel.cs" />
     <Compile Include="Interface\IStockInfoView.cs" />
     <Compile Include="Interface\IStockInfoViewModel.cs" />
-    <Compile Include="Models\Brand.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Config.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Stock.cs" />
-    <Compile Include="Models\StockDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -258,6 +252,10 @@
     <Resource Include="Assets\Photos\trolley.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WiiMix.Business.Model\WiiMix.Business.Model.csproj">
+      <Project>{da8819f6-bfc4-4e55-b8f7-5feb278d10db}</Project>
+      <Name>WiiMix.Business.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WiiMix.Data\WiiMix.Data.csproj">
       <Project>{dd2f79d9-f976-48c1-8456-9a2bb2aa6b45}</Project>
       <Name>WiiMix.Data</Name>

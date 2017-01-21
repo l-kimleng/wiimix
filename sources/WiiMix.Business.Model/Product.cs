@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace WiiMix.SaleInventory.Models
+namespace WiiMix.Business.Model
 {
     public class Product : BindableBase
     {

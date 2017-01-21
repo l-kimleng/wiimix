@@ -1,8 +1,8 @@
-﻿using Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 
-namespace WiiMix.SaleInventory.Models
+namespace WiiMix.Business.Model
 {
     public class Stock : BindableBase
     {

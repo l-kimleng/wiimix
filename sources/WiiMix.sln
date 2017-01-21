@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.SaleInventory", "Wii
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Data", "WiiMix.Data\WiiMix.Data.csproj", "{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.SaleInventory.Service", "WiiMix.SaleInventory.Service\WiiMix.SaleInventory.Service.csproj", "{07B9559C-C13F-4C10-8970-56599D6BCE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiiMix.Business.Model", "WiiMix.Business.Model\WiiMix.Business.Model.csproj", "{DA8819F6-BFC4-4E55-B8F7-5FEB278D10DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD2F79D9-F976-48C1-8456-9A2BB2AA6B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07B9559C-C13F-4C10-8970-56599D6BCE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07B9559C-C13F-4C10-8970-56599D6BCE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07B9559C-C13F-4C10-8970-56599D6BCE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07B9559C-C13F-4C10-8970-56599D6BCE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8819F6-BFC4-4E55-B8F7-5FEB278D10DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8819F6-BFC4-4E55-B8F7-5FEB278D10DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8819F6-BFC4-4E55-B8F7-5FEB278D10DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8819F6-BFC4-4E55-B8F7-5FEB278D10DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

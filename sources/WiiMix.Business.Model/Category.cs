@@ -1,9 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace WiiMix.SaleInventory.Models
+namespace WiiMix.Business.Model
 {
-    public class Brand : BindableBase
+    public class Category : BindableBase
     {
         private int _id;
         public int Id
@@ -21,9 +21,9 @@ namespace WiiMix.SaleInventory.Models
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public Brand Clone()
+        public Category Clone()
         {
-            return new Brand
+            return new Category
             {
                 Id = Id,
                 Name = Name

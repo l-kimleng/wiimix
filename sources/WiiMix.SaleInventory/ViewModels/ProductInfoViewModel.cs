@@ -7,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using WiiMix.Business.Model;
 using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
-using WiiMix.SaleInventory.Models;
 
 namespace WiiMix.SaleInventory.ViewModels
 {

@@ -1,5 +1,5 @@
 ﻿using Prism.Events;
-using WiiMix.SaleInventory.Models;
+using WiiMix.Business.Model;
 
 namespace WiiMix.SaleInventory.Events
 {
