@@ -3,7 +3,6 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +12,7 @@ using WiiMix.Business.Model;
 using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
+using WiiMix.SaleInventory.Service;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
@@ -37,67 +37,27 @@ namespace WiiMix.SaleInventory.ViewModels
         private void OnStockSave(Stock stock)
         {
             var isUpdated = stock.Id > 0;
-            using (_unitOfWork = _container.Resolve<IUnitOfWork>())
+            var stockService = _container.Resolve<IStockService>();
+            if (isUpdated)
             {
-                var newStock = new Data.Entities.Stock();
-                var saveStock = (isUpdated) ? _unitOfWork.StockRepository.FindUpdate(stock.Id) : new Data.Entities.Stock
+                if (stockService.Update(Stock) > 0)
                 {
-                    Date = stock.Date,
-                    Quantity = stock.Quantity,
-                    TotalPrice = stock.TotalPrice,
-                    Details = new List<Data.Entities.StockDetail>()
-                };
-                
-                var result = 0;
-                if (isUpdated)
-                {
-                    saveStock.Date = stock.Date;
-                    saveStock.Quantity = stock.Quantity;
-                    saveStock.TotalPrice = stock.TotalPrice;
-                    foreach (var detail in saveStock.Details)
-                    {
-                        var s = stock.Details.FirstOrDefault(d => d.ProductId == detail.ProductId);
-                        if (s == null) continue;
-                        detail.Quantity = s.Quantity;
-                        detail.Price = s.Price;
-                    }
-                    _unitOfWork.StockRepository.Update(saveStock);
+                    _eventAggregator.GetEvent<StockUpdateCompletedEvent>().Publish(Stock);
                 }
-                else
+            }
+            else
+            {
+                var newStock = stockService.Add(stock);
+                Stock.Id = newStock.Id;
+                foreach (var stockDetail in Stock.Details)
                 {
-                    foreach (var detail in stock.Details)
-                    {
-                        saveStock.Details.Add(new Data.Entities.StockDetail
-                        {
-                            ProductId = detail.ProductId,
-                            Quantity = detail.Quantity,
-                            Price = detail.Price,
-                        });
-                    }
-                    newStock = _unitOfWork.StockRepository.Add(saveStock);
+                    var s = newStock.Details.SingleOrDefault(x => x.ProductId == stockDetail.ProductId);
+                    if (s == null) continue;
+                    stockDetail.Id = s.Id;
+                    stockDetail.ProductId = s.ProductId;
+                    stockDetail.StockId = s.StockId;
                 }
-                result = _unitOfWork.Completed();
-                if (result > 0)
-                {
-                    if (newStock.Id > 0)
-                    {
-                        Stock.Id = newStock.Id;
-                        foreach (var stockDetail in Stock.Details)
-                        {
-                            var stockDetailDb =
-                                newStock.Details.SingleOrDefault(x => x.ProductId == stockDetail.ProductId);
-                            if (stockDetailDb == null) continue;
-                            stockDetail.Id = stockDetailDb.Id;
-                            stockDetail.ProductId = stockDetailDb.ProductId;
-                            stockDetail.StockId = stockDetailDb.StockId;
-                        }
-                        _eventAggregator.GetEvent<StockCreateCompletedEvent>().Publish(Stock);
-                    }
-                    else
-                    {
-                        _eventAggregator.GetEvent<StockUpdateCompletedEvent>().Publish(Stock);
-                    }
-                }
+                _eventAggregator.GetEvent<StockCreateCompletedEvent>().Publish(Stock);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -11,20 +10,21 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using WiiMix.Business.Model;
-using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
+using WiiMix.SaleInventory.Service;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
     public class ProductViewModel : BindableBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IUnitOfWork _unitOfWork;
-        public ProductViewModel(IEventAggregator eventAggregator, IUnitOfWork unitOfWork)
+        private readonly IProductService _productService;
+
+        public ProductViewModel(IEventAggregator eventAggregator, IProductService productService)
         {
             _eventAggregator = eventAggregator;
-            _unitOfWork = unitOfWork;
+            _productService = productService;
             GetAll();
             UpdateCommand = new DelegateCommand<Product>(OnClickUpdatedCommand);
             AddNewCommand = new DelegateCommand(OnAddNewProductCommand);
@@ -104,20 +104,11 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void GetAll()
         {
-            using (var unitOfwork = _unitOfWork)
+            Products = new ObservableCollection<Product>(_productService.Find());
+            ProductCollectionView = CollectionViewSource.GetDefaultView(Products);
+            if (Products.Count > 0)
             {
-                var productRepository = unitOfwork.ProductRepository;
-                Products = new ObservableCollection<Product>();
-                //Products.AddRange(Mapper.Map<IEnumerable<Product>>(productRepository.Find()));
-                foreach (var product in productRepository.Find())
-                {
-                    Products.Add(Mapper.Map<Product>(product));
-                }
-                ProductCollectionView = CollectionViewSource.GetDefaultView(Products);
-                if (Products.Count > 0)
-                {
-                    SelectedProduct = Products[0];
-                }
+                SelectedProduct = Products[0];
             }
         }
 

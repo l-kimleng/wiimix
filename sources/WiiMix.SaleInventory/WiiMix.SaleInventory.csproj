@@ -260,6 +260,10 @@
       <Project>{dd2f79d9-f976-48c1-8456-9a2bb2aa6b45}</Project>
       <Name>WiiMix.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WiiMix.SaleInventory.Service\WiiMix.SaleInventory.Service.csproj">
+      <Project>{07b9559c-c13f-4c10-8970-56599d6bce0f}</Project>
+      <Name>WiiMix.SaleInventory.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

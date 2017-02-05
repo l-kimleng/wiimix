@@ -9,6 +9,7 @@ using WiiMix.Data.Persistence;
 using WiiMix.Data.Persistence.Repositories;
 using WiiMix.Data.Repositories;
 using WiiMix.SaleInventory.Interface;
+using WiiMix.SaleInventory.Service;
 using WiiMix.SaleInventory.Utils;
 using WiiMix.SaleInventory.ViewModels;
 using WiiMix.SaleInventory.Views;
@@ -33,6 +34,10 @@ namespace WiiMix.SaleInventory
             _container.RegisterType<ICategoryRepository, CategoryRepository>();
             _container.RegisterType<IBrandRepository, BrandRepository>();
             _container.RegisterType<IStockRepository, StockRepository>();
+            _container.RegisterType<IProductService, ProductService>();
+            _container.RegisterType<ICategoryService, CategoryService>();
+            _container.RegisterType<IBrandService, BrandService>();
+            _container.RegisterType<IStockService, StockService>();
 
             _container.RegisterTypeForNavigation<MainView>();
             _container.RegisterTypeForNavigation<ProductView>("Inventory/ProductView");

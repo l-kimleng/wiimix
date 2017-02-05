@@ -1,28 +1,27 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using WiiMix.Data;
+using WiiMix.Business.Model;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
-using WiiMix.Business.Model;
+using WiiMix.SaleInventory.Service;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
     public class StockViewModel : BindableBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IStockService _stockService;
 
-        public StockViewModel(IEventAggregator eventAggregator, IUnitOfWork unitOfWork)
+        public StockViewModel(IEventAggregator eventAggregator, IStockService stockService)
         {
             _eventAggregator = eventAggregator;
-            _unitOfWork = unitOfWork;
+            _stockService = stockService;
             GetAll();
             AddStockCommand = new DelegateCommand(OnStockAddCommand);
             UpdateStockCommand = new DelegateCommand<Stock>(OnStockUpdateCommand);
@@ -87,16 +86,7 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void GetAll()
         {
-            using (var unitOfWork = _unitOfWork)
-            {
-                var stocks = unitOfWork.StockRepository.FindAllDetail();
-                Stocks = new ObservableCollection<Stock>();
-                foreach (var stock in stocks)
-                {
-                    Stocks.Add(BuildStock(stock));
-                }
-            }
-
+            Stocks = new ObservableCollection<Stock>(_stockService.FindAllDetail());
             StockCollectionView = CollectionViewSource.GetDefaultView(Stocks);
             if (Stocks.Count > 0)
             {
@@ -104,55 +94,9 @@ namespace WiiMix.SaleInventory.ViewModels
             }
         }
 
-        private Stock BuildStock(WiiMix.Data.Entities.Stock stock)
-        {
-            var myStock = new Stock
-            {
-                Id = stock.Id,
-                Date = stock.Date,
-                Quantity = stock.Quantity,
-                TotalPrice = stock.TotalPrice,
-                Details = new ObservableCollection<StockDetail>()
-            };
-            foreach (var detail in stock.Details)
-            {
-                myStock.Details.Add(BuildStockDetail(detail));
-            }
-
-            return myStock;
-        }
-
         [Microsoft.Practices.Unity.Dependency]
         public IStockInfoViewModel StockInfoViewModel { get; set; }
         public ICommand AddStockCommand { get; private set; }
         public ICommand UpdateStockCommand { get; private set; }
-        private IList<Product> _products;
-        private StockDetail BuildStockDetail(WiiMix.Data.Entities.StockDetail detail)
-        {
-            var myDetail = new StockDetail();
-            using (_unitOfWork)
-            {
-                if (_products == null)
-                {
-                    _products = new List<Product>();
-                    foreach (var product in _unitOfWork.ProductRepository.Find())
-                    {
-                        _products.Add(AutoMapper.Mapper.Map<Product>(product));
-                    }
-                }
-                var p = _products.SingleOrDefault(x => x.Id == detail.ProductId);
-                if (p != null)
-                {
-                    myDetail.Id = detail.Id;
-                    myDetail.ProductId = p.Id;
-                    myDetail.Quantity = detail.Quantity;
-                    myDetail.Price = detail.Price;
-                    myDetail.StockId = detail.StockId;
-                    myDetail.Product = p;
-
-                }
-            }
-            return myDetail;
-        }
     }
 }

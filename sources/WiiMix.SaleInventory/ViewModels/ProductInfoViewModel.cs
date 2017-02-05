@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Mvvm;
@@ -8,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using WiiMix.Business.Model;
-using WiiMix.Data;
 using WiiMix.SaleInventory.Events;
 using WiiMix.SaleInventory.Interface;
+using WiiMix.SaleInventory.Service;
 
 namespace WiiMix.SaleInventory.ViewModels
 {
@@ -32,45 +31,18 @@ namespace WiiMix.SaleInventory.ViewModels
         private void OnSaveProduct(Product product)
         {
             var isUpdated = product.Id > 0;
-            using (var unitOfWork = _container.Resolve<IUnitOfWork>())
+            var productService = _container.Resolve<IProductService>();
+            product.CategoryId = product.Category.Id;
+            product.BrandId = product.Brand.Id;
+            if (isUpdated)
             {
-                var savedProduct = isUpdated ? unitOfWork.ProductRepository.FindUpdate(product.Id) : new Data.Entities.Product {Config = new Data.Entities.Config()};
-                savedProduct.Name = product.Name;
-                savedProduct.CategoryId = product.Category.Id;
-                savedProduct.BrandId = product.Brand.Id;
-
-                savedProduct.Config.Feature = product.Config.Feature;
-                savedProduct.Config.Price = product.Config.Price;
-                savedProduct.Config.Image = product.Config.Image;
-                var newProductId = 0;
-                var result = 0;
-                if (isUpdated)
-                {
-                    savedProduct.Config.ProductId = product.Id;
-                    unitOfWork.ProductRepository.Update(savedProduct);
-                    result = unitOfWork.Completed();
-                }
-                else
-                {
-                    var p = unitOfWork.ProductRepository.Add(savedProduct);
-                    result = unitOfWork.Completed();
-                    newProductId = p.Id;
-                }
-                if (result > 0)
-                {
-                    if (newProductId > 0)
-                    {
-                        product.Id = newProductId;
-                        product.CategoryId = product.Category.Id;
-                        product.BrandId = product.Brand.Id;
-                        product.Config.ProductId = newProductId;
-                        _eventAggregator.GetEvent<ProductCreateCompletedEvent>().Publish(product);
-                    }
-                    else
-                    {
-                        _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Publish(product);
-                    }
-                }
+                productService.Update(product);
+                _eventAggregator.GetEvent<ProductUpdateCompletedEvent>().Publish(product);
+            }
+            else
+            {
+                var p = productService.Add(product);
+                _eventAggregator.GetEvent<ProductCreateCompletedEvent>().Publish(p);
             }
         }
 
@@ -110,8 +82,8 @@ namespace WiiMix.SaleInventory.ViewModels
             {
                 Product = new Product
                 {
-                    Category = Categories.Take(1).FirstOrDefault(),
-                    Brand = Brands.Take(1).FirstOrDefault(),
+                    Category = Categories.FirstOrDefault(),
+                    Brand = Brands.FirstOrDefault(),
                     Config = new Config()
                 };
             }
@@ -120,24 +92,15 @@ namespace WiiMix.SaleInventory.ViewModels
 
         private void Initialize()
         {
-            using (var unitOfWork = _container.Resolve<IUnitOfWork>())
+            var categoryService = _container.Resolve<ICategoryService>();
+            var brandService = _container.Resolve<IBrandService>();
+            if (Categories == null)
             {
-                if (Categories == null)
-                {
-                    Categories = new List<Category>();
-                    foreach (var category in unitOfWork.CategoryRepository.GetAll())
-                    {
-                        Categories.Add(Mapper.Map<Category>(category));
-                    }
-                }
-                if (Brands == null)
-                {
-                    Brands = new List<Brand>();
-                    foreach (var brand in unitOfWork.BrandRepository.GetAll())
-                    {
-                        Brands.Add(Mapper.Map<Brand>(brand));
-                    }
-                }
+                Categories = categoryService.GetAll().ToList();
+            }
+            if (Brands == null)
+            {
+                Brands = brandService.GetAll().ToList();
             }
         }
 
