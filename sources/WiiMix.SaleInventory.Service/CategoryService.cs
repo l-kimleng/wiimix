@@ -17,7 +17,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var categories = _unitOfWork.CategoryRepository.GetAll();
+                var categories = _unitOfWork.Categories.GetAll();
                 foreach (var category in categories)
                 {
                     yield return Mapper.Map<Category>(category);

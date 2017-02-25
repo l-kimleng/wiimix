@@ -17,7 +17,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var productRepository = _unitOfWork.ProductRepository;
+                var productRepository = _unitOfWork.Products;
                 foreach (var product in productRepository.Find())
                 {
                     yield return (Mapper.Map<Product>(product));
@@ -29,7 +29,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var product = _unitOfWork.ProductRepository.FindUpdate(id);
+                var product = _unitOfWork.Products.FindUpdate(id);
                 return Mapper.Map<Product>(product);
             }
         }
@@ -38,7 +38,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var productSaved = _unitOfWork.ProductRepository.FindUpdate(product.Id);
+                var productSaved = _unitOfWork.Products.FindUpdate(product.Id);
                 productSaved.Name = product.Name;
                 productSaved.CategoryId = product.Category.Id;
                 productSaved.BrandId = product.Brand.Id;
@@ -47,7 +47,7 @@ namespace WiiMix.SaleInventory.Service
                 productSaved.Config.Price = product.Config.Price;
                 productSaved.Config.Image = product.Config.Image;
                 productSaved.Config.ProductId = product.Id;
-                _unitOfWork.ProductRepository.Update(productSaved);
+                _unitOfWork.Products.Update(productSaved);
                 return _unitOfWork.Completed();
             }
         }
@@ -59,7 +59,7 @@ namespace WiiMix.SaleInventory.Service
                 var productAdded = Mapper.Map<Data.Entities.Product>(product);
                 productAdded.Category = null;
                 productAdded.Brand = null;
-                var p =_unitOfWork.ProductRepository.Add(productAdded);
+                var p =_unitOfWork.Products.Add(productAdded);
                 _unitOfWork.Completed();
                 product.Id = p.Id;
                 product.CategoryId = p.CategoryId;

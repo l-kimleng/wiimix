@@ -18,7 +18,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var brands = _unitOfWork.BrandRepository.GetAll();
+                var brands = _unitOfWork.Brands.GetAll();
                 foreach (var brand in brands)
                 {
                     yield return Mapper.Map<Brand>(brand);

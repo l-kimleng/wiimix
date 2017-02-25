@@ -20,6 +20,7 @@ namespace WiiMix.SaleInventory.ViewModels
         {
             var hamburgerMenu = obj as HamburgerMenu;
             if (hamburgerMenu == null) return;
+            hamburgerMenu.IsPaneOpen = false;
             var selectedItem = hamburgerMenu.SelectedItem;
             var menu = selectedItem as HamburgerMenuItem;
             _regionManager.RequestNavigate(RegionConstantCollection.InventoryRegion, menu?.Tag.ToString() ?? "");

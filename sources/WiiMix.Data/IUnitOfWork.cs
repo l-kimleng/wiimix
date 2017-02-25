@@ -5,11 +5,11 @@ namespace WiiMix.Data
 {
     public interface IUnitOfWork : IDisposable
     {
-        IProductRepository ProductRepository { get; }
-        ICategoryRepository CategoryRepository { get; }
-        IBrandRepository BrandRepository { get; }
-        IConfigRepository ConfigRepository { get; }
-        IStockRepository StockRepository { get; }
+        IProductRepository Products { get; }
+        ICategoryRepository Categories { get; }
+        IBrandRepository Brands { get; }
+        IConfigRepository Configs { get; }
+        IStockRepository Stocks { get; }
         int Completed();
     }
 }

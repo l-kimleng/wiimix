@@ -8,22 +8,22 @@ namespace WiiMix.Data.Persistence
         // We are not using dbContext because we are going to 
         // work with more than two dbContext in unit of work
         private readonly SaleInventoryContext _context;
-        private IProductRepository _productRepository;
-        private ICategoryRepository _categoryRepository;
-        private IBrandRepository _brandRepository;
-        private IConfigRepository _configRepository;
-        private IStockRepository _stockRepository;
+        private IProductRepository _products;
+        private ICategoryRepository _categories;
+        private IBrandRepository _brands;
+        private IConfigRepository _configs;
+        private IStockRepository _stocks;
 
         public UnitOfWork(SaleInventoryContext context)
         {
             _context = context;
         }
 
-        public IProductRepository ProductRepository => _productRepository ?? (_productRepository = new ProductRepository(_context));
-        public ICategoryRepository CategoryRepository => _categoryRepository ?? (_categoryRepository = new CategoryRepository(_context));
-        public IBrandRepository BrandRepository => _brandRepository ?? (_brandRepository = new BrandRepository(_context));
-        public IConfigRepository ConfigRepository => _configRepository ?? (_configRepository = new ConfigRepository(_context));
-        public IStockRepository StockRepository => _stockRepository ?? (_stockRepository = new StockRepository(_context));
+        public IProductRepository Products => _products ?? (_products = new ProductRepository(_context));
+        public ICategoryRepository Categories => _categories ?? (_categories = new CategoryRepository(_context));
+        public IBrandRepository Brands => _brands ?? (_brands = new BrandRepository(_context));
+        public IConfigRepository Configs => _configs ?? (_configs = new ConfigRepository(_context));
+        public IStockRepository Stocks => _stocks ?? (_stocks = new StockRepository(_context));
 
         public void Dispose()
         {

@@ -19,7 +19,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var stocks = _unitOfWork.StockRepository.FindAllDetail();
+                var stocks = _unitOfWork.Stocks.FindAllDetail();
                 foreach (var stock in stocks)
                 {
                     yield return BuildStock(stock);
@@ -33,7 +33,7 @@ namespace WiiMix.SaleInventory.Service
             {
                 var stockAdded = Mapper.Map<Data.Entities.Stock>(stock);
                 
-                var stockDb = _unitOfWork.StockRepository.Add(stockAdded);
+                var stockDb = _unitOfWork.Stocks.Add(stockAdded);
                 _unitOfWork.Completed();
                 return Mapper.Map<Stock>(stockDb);
             }
@@ -43,7 +43,7 @@ namespace WiiMix.SaleInventory.Service
         {
             using (_unitOfWork)
             {
-                var stockUpdated = _unitOfWork.StockRepository.FindUpdate(stock.Id);
+                var stockUpdated = _unitOfWork.Stocks.FindUpdate(stock.Id);
                 stockUpdated.Date = stock.Date;
                 stockUpdated.Quantity = stock.Quantity;
                 stockUpdated.TotalPrice = stock.TotalPrice;
@@ -54,7 +54,7 @@ namespace WiiMix.SaleInventory.Service
                     detail.Quantity = s.Quantity;
                     detail.Price = s.Price;
                 }
-                _unitOfWork.StockRepository.Update(stockUpdated);
+                _unitOfWork.Stocks.Update(stockUpdated);
                 return _unitOfWork.Completed();
             }
         }
@@ -86,7 +86,7 @@ namespace WiiMix.SaleInventory.Service
                 if (_products == null)
                 {
                     _products = new List<Product>();
-                    foreach (var product in _unitOfWork.ProductRepository.Find())
+                    foreach (var product in _unitOfWork.Products.Find())
                     {
                         _products.Add(Mapper.Map<Product>(product));
                     }

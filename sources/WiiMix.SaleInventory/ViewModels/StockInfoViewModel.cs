@@ -139,7 +139,7 @@ namespace WiiMix.SaleInventory.ViewModels
         {
             using (_unitOfWork = _container.Resolve<IUnitOfWork>())
             {
-                var products = _unitOfWork.ProductRepository.Find();
+                var products = _unitOfWork.Products.Find();
                 Products = new ObservableCollection<Product>();
                 foreach (var product in products)
                 {
