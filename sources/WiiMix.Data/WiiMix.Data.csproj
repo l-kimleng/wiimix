@@ -57,6 +57,7 @@
     <Compile Include="Entities\StockTransfer.cs" />
     <Compile Include="Entities\Store.cs" />
     <Compile Include="Entities\ItemTransfer.cs" />
+    <Compile Include="Entities\StoreItem.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Migrations\201701021406219_InitialModel.cs" />
     <Compile Include="Migrations\201701021406219_InitialModel.Designer.cs">
